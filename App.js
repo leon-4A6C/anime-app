@@ -1,15 +1,19 @@
-import React from 'react';
+import React from 'react'
 import {
   Text,
   View,
-} from 'react-native';
+} from 'react-native'
+import { Provider } from "react-redux"
 
-export default class App extends React.Component {
+import App from "./app/app"
+import store from "./app/store"
+
+export default class Root extends React.Component {
   render() {
     return (
-      <View>
-        <Text>default app</Text>
-      </View>
+      <Provider store={store}>
+        <App>default app</App>
+      </Provider>
     );
   }
 }
