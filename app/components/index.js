@@ -1,5 +1,5 @@
+import Search from "./search"
 
-
-export default {
-
+export {
+  Search
 }
