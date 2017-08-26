@@ -1,7 +1,7 @@
 import { FETCHING_TOP, FETCHING_TOP_SUCCES, FETCHING_TOP_FAILURE } from "../constants"
 
 const initialState = {
-  animes: {},
+  animes: [],
   isFetching: false,
   error: false
 }
@@ -11,7 +11,7 @@ export default function(state = initialState, action) {
     case FETCHING_TOP:
       return {
         ...state,
-        animes: {},
+        animes: [],
         isFetching: true,
         error: false
       }

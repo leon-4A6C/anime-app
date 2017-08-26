@@ -2,10 +2,10 @@ import { FETCHING_TOP, FETCHING_TOP_SUCCES, FETCHING_TOP_FAILURE } from "../cons
 import MAL from "react-native-mal-scrape"
 const mal = new MAL()
 
-export function fetchTop() {
+export function fetchTop(options) {
   return (dispatch) => {
     dispatch(fetchTopStart())
-    mal.topAnime()
+    mal.topAnime(options)
       .then(animes => dispatch(fetchTopSuccess(animes)))
       .catch(e => dispatch(fetchTopFailure()))
   }

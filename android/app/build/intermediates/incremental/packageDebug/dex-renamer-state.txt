@@ -1,0 +1,4 @@
+#Sat Aug 26 21:11:30 CEST 2017
+base.0=/home/leon/github/anime-app/android/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
+renamed.0=classes.dex
+file.0=/home/leon/github/anime-app/android/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex

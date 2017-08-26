@@ -1,5 +1,5 @@
-import Search from "./search"
+import Item from "./item"
 
 export {
-  Search
+  Item
 }

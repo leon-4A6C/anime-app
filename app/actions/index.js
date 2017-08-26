@@ -1,5 +1,5 @@
-import top from "./top"
+import * as top from "./top"
 
-export default {
+export {
   top
 }
