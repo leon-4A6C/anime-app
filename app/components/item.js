@@ -11,20 +11,20 @@ import uiTheme from "../uiTheme"
 
 export default class home extends React.Component {
 
-  _pressed() {
-    // handle click and goto details page
-    console.log("pressed: " + this.props.id + " #" + this.props.rank);
+  _press() {
+    this.props.onPress(this.props, this.state);
   }
 
   render() {
     return (
       <TouchableOpacity
-        onPress={this._pressed.bind(this)}
+        onPress={this._press.bind(this)}
         style={styles.container}>
         <Image source={{uri: this.props.uri}} style={styles.image}/>
       </TouchableOpacity>
     );
   }
+
 }
 
 const styles = StyleSheet.create({

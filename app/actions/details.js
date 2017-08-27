@@ -2,10 +2,10 @@ import { FETCHING_DETAILS, FETCHING_DETAILS_SUCCES, FETCHING_DETAILS_FAILURE } f
 import MAL from "react-native-mal-scrape"
 const mal = new MAL()
 
-export function fetchDetails() {
+export function fetchDetails(id) {
   return (dispatch) => {
     dispatch(fetchDetailsStart())
-    mal.getDetails(5114)
+    mal.getDetails(id)
       .then(anime => dispatch(fetchDetailsSuccess(anime)))
       .catch(e => dispatch(fetchDetailsFailure()))
   }

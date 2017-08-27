@@ -50,7 +50,6 @@ class Home extends React.Component {
   })
 
   _load() {
-    console.log("load req");
     if (!this.props.top.isFetching) {
       const { limit } = this.state;
       this.props.getTop({limit: limit})
@@ -58,6 +57,11 @@ class Home extends React.Component {
         limit: limit + 50
       })
     }
+  }
+
+  _itemPress(props, state) {
+    const { navigate } = this.props.navigation;
+    navigate("ItemInfo", props);
   }
 
   render() {
@@ -68,7 +72,8 @@ class Home extends React.Component {
                                   uri={item.posters.big}
                                   name={item.title}
                                   id={item.id}
-                                  rank={item.ranking}/>)}
+                                  rank={item.ranking}
+                                  onPress={this._itemPress.bind(this)}/>)}
         onEndReached={this._load.bind(this)}
         onEndReachedThreshold={0 /*adjust as needed*/}
         keyExtractor={(x) => x.id}
