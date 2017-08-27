@@ -9,6 +9,7 @@ import { connect } from "react-redux"
 
 import { episodes, episode } from "../actions"
 import { Episode } from "../components"
+import uiTheme from "../uiTheme"
 
 class Episodes extends React.Component {
 
@@ -38,6 +39,7 @@ class Episodes extends React.Component {
       }
     }
 
+    // todo: get saved stuff
     const next = []
     for(let i = 0; i < Math.min(3, eps.length); i++) {
       next.push(eps[i]);
@@ -50,7 +52,7 @@ class Episodes extends React.Component {
               {data: next, title: "next episodes"},
               {data: eps, title: "all episodes"},
             ]}
-          renderItem={({item}) => <Episode episodeName={item.titles[1]} style={styles.item} episodeNumber={item.episode} onPress={this.episodePress.bind(this)}/>}
+          renderItem={({item}) => <Episode episodeName={item.titles[1] || item.titles[0]} episodeNumber={item.episode} onPress={this.episodePress.bind(this)}/>}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item) => item.episode}
           />
@@ -60,23 +62,14 @@ class Episodes extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingTop: 22
-  },
   sectionHeader: {
     paddingTop: 2,
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 2,
-    fontSize: 14,
+    fontSize: uiTheme.text.fontSize,
     fontWeight: 'bold',
     backgroundColor: 'rgba(247,247,247,1.0)',
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
   },
 })
 

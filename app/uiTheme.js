@@ -13,4 +13,7 @@ export default {
         height: 50,
       },
     },
+    text: {
+      fontSize: 14
+    }
   };

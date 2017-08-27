@@ -1,11 +1,13 @@
 import React from "react"
 import {
-  View,
-  Text
+  ScrollView,
+  Text,
+  StyleSheet,
 } from "react-native"
 import { connect } from "react-redux"
 
 import { details } from "../actions"
+import uiTheme from "../uiTheme"
 
 class Details extends React.Component {
 
@@ -21,13 +23,31 @@ class Details extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text>{this.props.details.details.title}</Text>
-        <Text>{this.props.details.details.synopsis}</Text>
-      </View>
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>{this.props.details.details.title}</Text>
+        <ScrollView horizontal={true}>
+          {/* add images(posters) here */}
+        </ScrollView>
+        <Text style={styles.synopsis}>{this.props.details.details.synopsis}</Text>
+      </ScrollView>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10
+  },
+  title: {
+    fontSize: uiTheme.text.fontSize+4,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  synopsis: {
+    fontSize: uiTheme.text.fontSize,
+    marginBottom: 20
+  },
+});
 
 function mapStateToProps(state) {
   return {

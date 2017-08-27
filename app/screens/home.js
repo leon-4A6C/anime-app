@@ -6,33 +6,10 @@ import {
   Text,
   FlatList,
 } from "react-native";
-import { Toolbar } from "react-native-material-ui"
 import { connect } from "react-redux"
 
 import { top } from "../actions"
-import { Item } from "../components"
-
-class SearchBar extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  searchAnime(text) {
-    // trigger search action
-  }
-
-  render() {
-    return (<Toolbar
-        centerElement="anime"
-        searchable={{
-          autoFocus: true,
-          placeholder: 'Search',
-          onSubmitEditing: this.searchAnime.bind(this)
-        }}/>)
-  }
-
-}
+import { Item, SearchBar } from "../components"
 
 class Home extends React.Component {
 
@@ -40,19 +17,117 @@ class Home extends React.Component {
     super(props);
     this.state = {
       items: [],
-      limit: 0
+      limit: 0,
+      sort: "",
+      sorting: {}
+    }
+
+    this.sortingList = [
+      {
+        label: "all",
+        option: {}
+      },
+      {
+        label: "airing",
+        option: {
+          type: "airing"
+        }
+      },
+      {
+        label: "upcoming",
+        option: {
+          type: "upcoming"
+        }
+      },
+      {
+        label: "tv series",
+        option: {
+          type: "tv"
+        }
+      },
+      {
+        label: "movies",
+        option: {
+          type: "movie"
+        }
+      },
+      {
+        label: "OVAs",
+        option: {
+          type: "ova"
+        }
+      },
+      {
+        label: "specials",
+        option: {
+          type: "special"
+        }
+      },
+      {
+        label: "popular",
+        option: {
+          type: "bypopularity"
+        }
+      },
+      {
+        label: "favorited",
+        option: {
+          type: "favorite"
+        }
+      },
+    ]
+  }
+
+  searched(text) {
+    console.log("searched for: " + text)
+  }
+
+  removeSearch(text) {
+    console.log("remove search for: " + text)
+  }
+
+  optionsClick(option) {
+    if(option.result == "itemSelected") {
+      this.setState({
+        items: [], // remove all items
+        sorting: this.sortingList[option.index || 0].option,
+        limit: 0
+      })
+      this._load()
     }
   }
 
-  static navigationOptions = ({navigation}) => ({
-    title: "home",
-    header: (<SearchBar/>)
-  })
+  componentDidMount() {
+    // pass the functions to params of the nav
+    this.props.navigation.setParams({
+      onSearched: this.searched.bind(this),
+      onRemoveSearch: this.removeSearch.bind(this),
+      options: this.sortingList.map(x => x.label),
+      onOptionsClick: this.optionsClick.bind(this),
+    });
+    // load initial items
+    this._load()
+  }
+
+  static navigationOptions = ({navigation, screenProps}) => {
+    const params = navigation.state.params || {};
+    return {
+      title: "home",
+      header: (<SearchBar 
+                onSearch={params.onSearched}
+                onRemoveSearch={params.onRemoveSearch}
+                onMenuClick={params.onMenuClick}
+                onOptionsClick={params.onOptionsClick}
+                options={params.options}
+                />)
+    }
+  }
 
   _load() {
+    console.log("hit bottom");
     if (!this.props.top.isFetching) {
       const { limit } = this.state;
-      this.props.getTop({limit: limit})
+      this.props.getTop({...this.state.sorting, limit: limit})
       this.setState({
         limit: limit + 50
       })
@@ -64,18 +139,31 @@ class Home extends React.Component {
     navigate("ItemInfo", props);
   }
 
+  _itemLongPress(props, state) {
+    console.log("long press!")
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.top.isFetching && !this.props.top.isFetching) {
+      this.setState({
+        items: [...this.state.items, ...this.props.top.animes]
+      })
+    }
+  }
+
   render() {
     return (
       <FlatList
-        data={this.props.top.animes}
+        data={this.state.items}
         renderItem={({item}) => (<Item
                                   uri={item.posters.big}
                                   name={item.title}
                                   id={item.id}
                                   rank={item.ranking}
-                                  onPress={this._itemPress.bind(this)}/>)}
+                                  onPress={this._itemPress.bind(this)}
+                                  onLongPress={this._itemLongPress.bind(this)}/>)}
         onEndReached={this._load.bind(this)}
-        onEndReachedThreshold={0 /*adjust as needed*/}
+        onEndReachedThreshold={1 /*adjust as needed*/}
         keyExtractor={(x) => x.id}
         numColumns={3}
       />
