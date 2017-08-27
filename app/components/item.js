@@ -1,11 +1,13 @@
 import React from "react";
 import {
   Image,
-  TouchableNativeFeedback,
+  TouchableOpacity,
   StyleSheet,
   Platform,
   Dimensions
 } from "react-native";
+
+import uiTheme from "../uiTheme"
 
 export default class home extends React.Component {
 
@@ -16,20 +18,18 @@ export default class home extends React.Component {
 
   render() {
     return (
-      <TouchableNativeFeedback
+      <TouchableOpacity
         onPress={this._pressed.bind(this)}
-        background={TouchableNativeFeedback.SelectableBackground()}
-        useForeground={true}
         style={styles.container}>
         <Image source={{uri: this.props.uri}} style={styles.image}/>
-      </TouchableNativeFeedback>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    
+    backgroundColor: uiTheme.palette.accentColor
   },
   image: {
     width: Dimensions.get("window").width / 3,

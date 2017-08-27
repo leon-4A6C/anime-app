@@ -15,30 +15,27 @@ const ItemInfo = TabNavigator({
          
     },
     style: {
-      backgroundColor: uiTheme.palette.primaryColor,
+      backgroundColor: uiTheme.palette.primaryDark,
     },
     indicatorStyle: {
       backgroundColor: uiTheme.palette.accentColor
-    },
-    headerStyle: {
-      backgroundColor: uiTheme.palette.primaryDark
     }
   }
 });
 
 // root
 const App = StackNavigator({
+  Home: { screen: Home },
   ItemInfo: { 
     screen: ItemInfo,
     navigationOptions: {
       headerStyle: {
-        backgroundColor: uiTheme.palette.primaryLight,
+        backgroundColor: uiTheme.palette.primaryColor,
         height: uiTheme.toolbar.container.height
       },
       headerTintColor: uiTheme.palette.textColor
     }
   },
-  Home: { screen: Home },
 });
 
 export default App

@@ -2,9 +2,9 @@ import { COLOR } from 'react-native-material-ui';
 
 export default {
     palette: {
-      primaryColor: COLOR.teal700,
-      primaryDark: COLOR.teal900,
-      primaryLight: COLOR.teal500,
+      primaryColor: COLOR.teal500,
+      primaryDarker: COLOR.teal900,
+      primaryDark: COLOR.teal700,
       accentColor: COLOR.tealA700,
       textColor: COLOR.white
     },
