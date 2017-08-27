@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Image,
-  TouchableOpacity,
+  TouchableHighlight,
   StyleSheet,
   Dimensions
 } from "react-native";
@@ -20,13 +20,13 @@ export default class home extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity
+      <TouchableHighlight
         onPress={this._press.bind(this)}
         style={styles.container}
         onLongPress={this._longPress.bind(this)}
         >
         <Image source={{uri: this.props.uri}} style={styles.image}/>
-      </TouchableOpacity>
+      </TouchableHighlight>
     );
   }
 
@@ -34,7 +34,7 @@ export default class home extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: uiTheme.palette.accentColor
+    
   },
   image: {
     width: Dimensions.get("window").width / 3,

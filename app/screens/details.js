@@ -3,6 +3,7 @@ import {
   ScrollView,
   Text,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native"
 import { connect } from "react-redux"
 
@@ -22,15 +23,23 @@ class Details extends React.Component {
   
 
   render() {
-    return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.title}>{this.props.details.details.title}</Text>
-        <ScrollView horizontal={true}>
-          {/* add images(posters) here */}
+    const { isFetching, details } = this.props.details;
+
+    if(isFetching) {
+      return (
+        <ActivityIndicator style={styles.loader} size="large"/>
+      )
+    } else {
+      return (
+        <ScrollView style={styles.container}>
+          <Text style={styles.title}>{details.title}</Text>
+          <ScrollView horizontal={true} pagingEnabled={true}>
+            {/* add images(posters) here */}
+          </ScrollView>
+          <Text style={styles.synopsis}>{details.synopsis}</Text>
         </ScrollView>
-        <Text style={styles.synopsis}>{this.props.details.details.synopsis}</Text>
-      </ScrollView>
-    )
+      )
+    }
   }
 }
 
@@ -47,6 +56,9 @@ const styles = StyleSheet.create({
     fontSize: uiTheme.text.fontSize,
     marginBottom: 20
   },
+  loader: {
+    marginTop: 10
+  }
 });
 
 function mapStateToProps(state) {

@@ -88,10 +88,11 @@ class Home extends React.Component {
 
   optionsClick(option) {
     if(option.result == "itemSelected") {
+      // reset the state
       this.setState({
         items: [], // remove all items
-        sorting: this.sortingList[option.index || 0].option,
-        limit: 0
+        sorting: this.sortingList[option.index].option,
+        limit: 0 // start at the top again
       })
       this._load()
     }
