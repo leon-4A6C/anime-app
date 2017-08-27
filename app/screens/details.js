@@ -15,15 +15,14 @@ class Details extends React.Component {
 
   componentDidMount() {
     const { params } = this.props.navigation.state;
-    console.log(params.id);
     this.props.getDetails(params.id);
   }
   
 
   render() {
-    console.log(this.props.details)
     return (
       <View>
+        <Text>{this.props.details.details.title}</Text>
         <Text>{this.props.details.details.synopsis}</Text>
       </View>
     )
