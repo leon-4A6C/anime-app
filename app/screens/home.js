@@ -34,7 +34,7 @@ class SearchBar extends React.Component {
 
 }
 
-class HomeScreen extends React.Component {
+class Home extends React.Component {
 
   constructor(props) {
     super(props);
@@ -64,7 +64,11 @@ class HomeScreen extends React.Component {
     return (
       <FlatList
         data={this.props.top.animes}
-        renderItem={({item}) => (<Item uri={item.posters.big} name={item.title} id={item.id} />)}
+        renderItem={({item}) => (<Item
+                                  uri={item.posters.big}
+                                  name={item.title}
+                                  id={item.id}
+                                  rank={item.ranking}/>)}
         onEndReached={this._load.bind(this)}
         onEndReachedThreshold={0 /*adjust as needed*/}
         keyExtractor={(x) => x.id}
@@ -85,7 +89,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 const styles = StyleSheet.create({
   container: {

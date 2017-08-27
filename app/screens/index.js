@@ -1,5 +1,9 @@
-import HomeScreen from "./home"
+import Home from "./home"
+import Details from "./details"
+import Episodes from "./episodes"
 
 export {
-  HomeScreen
+  Home,
+  Details,
+  Episodes
 }

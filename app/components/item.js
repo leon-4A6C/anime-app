@@ -7,11 +7,11 @@ import {
   Dimensions
 } from "react-native";
 
-export default class HomeScreen extends React.Component {
+export default class home extends React.Component {
 
   _pressed() {
     // handle click and goto details page
-    console.log("pressed: " + this.props.id);
+    console.log("pressed: " + this.props.id + " #" + this.props.rank);
   }
 
   render() {
@@ -29,7 +29,7 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-
+    
   },
   image: {
     width: Dimensions.get("window").width / 3,
