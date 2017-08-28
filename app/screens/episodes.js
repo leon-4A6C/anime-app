@@ -13,6 +13,13 @@ import uiTheme from "../uiTheme"
 
 class Episodes extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
   static navigationOptions = ({navigation}) => ({
     title: "episodes",
   })
@@ -24,8 +31,13 @@ class Episodes extends React.Component {
 
   episodePress(props, state) {
     // fire episode action and open video player
-    console.log("episode "+props.episodeNumber+" is pressed!")
-    console.log(this.props.episodes)
+    this.props.getEpisode(this.props.episodes.episodes[props.episodeNumber])
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.episode.isFetching && !this.props.episode.isFetching) {
+      this.props.navigation.navigate("VideoPlayer", {video: this.props.episode.episode[0]})
+    }
   }
 
   render() {
@@ -82,13 +94,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    episodes: state.episodes
+    episodes: state.episodes,
+    episode: state.episode,
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
     getEpisodes: (name, id) => dispatch(episodes.fetchEpisodes(name, id)),
-    getEpisode: (episode) => dispatch(episode.fetchEpisode(episode)),
+    getEpisode: (episodeInput) => dispatch(episode.fetchEpisode(episodeInput)),
   }
 }
 

@@ -1,6 +1,6 @@
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
-import { Home, Details, Episodes } from "./screens"
+import { Home, Details, Episodes, VideoPlayer } from "./screens"
 import uiTheme from "./uiTheme"
 
 const ItemInfo = TabNavigator({
@@ -36,6 +36,12 @@ const App = StackNavigator({
       headerTintColor: uiTheme.palette.textColor
     }
   },
+  VideoPlayer: {
+    screen: VideoPlayer,
+    navigationOptions: {
+      header: null
+    }
+  }
 });
 
 export default App
