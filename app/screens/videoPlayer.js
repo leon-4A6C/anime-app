@@ -17,7 +17,7 @@ import Orientation from 'react-native-orientation';
 import uiTheme from "../uiTheme"
   
 export default class VideoPlayer extends React.Component {
-  
+    // put the settings in the more-vert icon button thingy
     state = {
       rate: 1,
       volume: 1,
@@ -94,7 +94,7 @@ export default class VideoPlayer extends React.Component {
             this.state.controlsOpacity,  // The value to drive
             { 
                 toValue: this.state.controls ? 0 : 1,
-                duration: 200
+                duration: 75
             }
         ).start();
         this.setState({
@@ -256,8 +256,13 @@ const styles = StyleSheet.create({
     },
     topLeftControls: {
         flex: 9,
+        backgroundColor: "blue",
     },
     topRightControls: {
         justifyContent: "flex-end",
+        backgroundColor: "red",
     },
+    optionIcon: {
+        backgroundColor: "yellow"
+    }
 });

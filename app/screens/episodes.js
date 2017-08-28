@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from "react-native"
 import { connect } from "react-redux"
 
@@ -15,8 +16,10 @@ class Episodes extends React.Component {
 
   state = {
     title: "",
-    episode: 0
+    episode: 0,
   }
+
+  static errorShown = {error: false};
 
   static navigationOptions = ({navigation}) => ({
     title: "episodes",
@@ -38,8 +41,14 @@ class Episodes extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.episode.isFetching && !this.props.episode.isFetching) {
+    if(this.props.episode.isFetching && this.constructor.errorShown.error) {
+      this.constructor.errorShown.error = false;
+    }
+    if(prevProps.episode.isFetching && !this.props.episode.isFetching && !this.props.episode.error) {
       this.props.navigation.navigate("VideoPlayer", {video: this.props.episode.episode[0], title: this.state.title, episode: this.state.episode}) // pass the title and episode
+    } else if(this.props.episode.error && !this.constructor.errorShown.error) {
+      Alert.alert("error", "The application couldn't retrieve the file.\r\nThe file may have been taken down.")
+      this.constructor.errorShown.error = true;
     }
   }
 

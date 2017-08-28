@@ -19,13 +19,14 @@ export default class home extends React.Component {
   }
 
   render() {
+    const dim = Dimensions.get("window");
     return (
       <TouchableHighlight
         onPress={this._press.bind(this)}
         style={styles.container}
         onLongPress={this._longPress.bind(this)}
         >
-        <Image source={{uri: this.props.uri}} style={styles.image}/>
+        <Image source={{uri: this.props.uri}} style={{width: dim.width/3, height: dim.width/3*1.5}}/>
       </TouchableHighlight>
     );
   }
@@ -36,8 +37,4 @@ const styles = StyleSheet.create({
   container: {
     
   },
-  image: {
-    width: Dimensions.get("window").width / 3,
-    height: Dimensions.get("window").width / 3 * 1.5
-  }
 });

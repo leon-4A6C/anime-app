@@ -18,6 +18,7 @@ class Home extends React.Component {
     super(props);
     this.state = {
       items: [],
+      numRows: 3,
       limit: 0,
       sort: "",
       sorting: {},
@@ -90,7 +91,9 @@ class Home extends React.Component {
       limit: 0,
       searchText: text
     })
-    this._load()
+    setTimeout(() => {
+      this._load()
+    }, 10)
   }
 
   removeSearch(text) {
@@ -101,7 +104,9 @@ class Home extends React.Component {
       limit: 0,
       searchText: ""
     })
-    this._load()
+    setTimeout(() => {
+      this._load()
+    }, 10)
   }
 
   optionsClick(option) {
@@ -112,7 +117,9 @@ class Home extends React.Component {
         sorting: this.sortingList[option.index].option,
         limit: 0 // start at the top again
       })
-      this._load()
+      setTimeout(() => {
+        this._load()
+      }, 10)
     }
   }
 
@@ -148,7 +155,6 @@ class Home extends React.Component {
   }
 
   _load() {
-    console.log("hit bottom");
     const { limit, show, searchText } = this.state;
     
     if (!this.props.top.isFetching && !this.state.isSearch) {
@@ -187,17 +193,33 @@ class Home extends React.Component {
     }
   }
 
+  layoutChange(evt) {
+    // do something like this, but not this, because changing numColumns on the fly gives an error
+    // const { height, width } = evt.nativeEvent.layout;
+    // if(height > width) {
+    //   this.setState({
+    //     numRows: 3
+    //   })
+    // } else {
+    //   this.setState({
+    //     numRows: 6
+    //   })
+    // }
+    this.forceUpdate() // tmp fix
+  }
+
   render() {
     return (
       <FlatList
+        onLayout={this.layoutChange.bind(this)}
         data={this.state.items}
         renderItem={({item}) => (<Item
-                                  uri={item.posters.big}
-                                  name={item.title}
-                                  id={item.id}
-                                  rank={item.ranking}
-                                  onPress={this._itemPress.bind(this)}
-                                  onLongPress={this._itemLongPress.bind(this)}/>)}
+                                    uri={item.posters.big}
+                                    name={item.title}
+                                    id={item.id}
+                                    rank={item.ranking}
+                                    onPress={this._itemPress.bind(this)}
+                                    onLongPress={this._itemLongPress.bind(this)}/>)}
         onEndReached={this._load.bind(this)}
         onEndReachedThreshold={1 /*adjust as needed*/}
         keyExtractor={(x) => x.id}

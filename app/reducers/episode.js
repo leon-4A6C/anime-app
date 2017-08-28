@@ -15,18 +15,21 @@ export default function(state = initialState, action) {
         isFetching: true,
         error: false
       }
+      break;
     case FETCHING_EPISODE_SUCCES:
       return {
         ...state,
         isFetching: false,
         episode: action.data
       }
+      break;
     case FETCHING_EPISODE_FAILURE:
       return {
         ...state,
         isFetching: false,
         error: true
       }
+      break;
 
     default:
       return state
