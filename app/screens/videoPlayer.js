@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     StyleSheet,
     Text,
@@ -8,7 +7,8 @@ import {
     Animated,
     TouchableWithoutFeedback,
     TouchableNativeFeedback,
-    ToastAndroid
+    ToastAndroid,
+    ActivityIndicator,
 } from 'react-native';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -30,9 +30,11 @@ export default class VideoPlayer extends React.Component {
       controlsPosition: new Animated.Value(0), // change this the remove/add the controls
       controlsOpacity: new Animated.Value(1),
       controls: true,
+      loading: true,
     };
   
     onLoad = (data) => {
+        console.log("onLoad!")
         this.setState({
             duration: data.duration,
             paused: !this.state.paused,
@@ -40,8 +42,14 @@ export default class VideoPlayer extends React.Component {
     };
   
     onProgress = (data) => {
+        let loading = false;
+        if(data.playableDuration <= data.currentTime) {
+            loading = true;
+        }
+        console.log(data, loading)
         this.setState({
             currentTime: data.currentTime,
+            loading
         });
     };
   
@@ -133,19 +141,23 @@ export default class VideoPlayer extends React.Component {
                     />
                 </TouchableWithoutFeedback>
 
+                <View style={[styles.fullScreen, styles.middle]}>
+                    {this.state.loading ? <ActivityIndicator size="large"/> : null}
+                </View>
+
                 <Animated.View style={[styles.controlsTop, styles.controls, {transform: [{translateY: Animated.multiply(this.state.controlsPosition, new Animated.Value(-1))}], opacity: this.state.controlsOpacity}]}>
                     <View style={[styles.leftControls, styles.topLeftControls]}>
-                        <Text style={styles.text}>{params.title}</Text>
+                        <Text style={[styles.text, {textAlign: "left"}]}>{params.title}</Text>
                     </View>
                     <View style={[styles.rightControls, styles.topRightControls]}>
-                        <View style={styles.optionIcon}>
+                        <View>
                             <TouchableNativeFeedback
                                 delayPressIn={0}
                                 onPress={() => ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)}
                                 background={TouchableNativeFeedback.Ripple("#fff", true)}
                             >
                                 <View>
-                                    <Icon style={styles.text} name="more-vert" size={28} />
+                                    <Icon style={styles.icon} name="more-vert" size={28} />
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -155,11 +167,18 @@ export default class VideoPlayer extends React.Component {
                 <Animated.View style={[styles.controls, styles.controlsBottom, {transform: [{translateY: this.state.controlsPosition}], opacity: this.state.controlsOpacity}]}>
                     <View style={styles.leftControls}>
                         <View>
-                            <Icon 
+                            <TouchableNativeFeedback
+                                delayPressIn={0}
                                 onPress={() => this.setState({paused: !this.state.paused})}
-                                style={styles.text}
-                                name={this.state.paused ? "play-arrow" : "pause"}
-                                size={32}/>
+                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                            >
+                                <View>
+                                    <Icon 
+                                        style={styles.icon}
+                                        name={this.state.paused ? "play-arrow" : "pause"}
+                                        size={32}/>
+                                </View>
+                            </TouchableNativeFeedback>
                         </View>
                     </View>
                     <View style={styles.centerControls}>
@@ -180,11 +199,17 @@ export default class VideoPlayer extends React.Component {
                     </View>
                     <View style={styles.rightControls}>
                         <View>
-                            <Icon 
-                                onPress={() => {this.setState({fullscreen: !this.state.fullscreen}); ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)}}
-                                style={styles.text}
-                                name={this.state.fullscreen ? "fullscreen-exit" : "fullscreen"}
-                                size={32}/>
+                            <TouchableNativeFeedback
+                                delayPressIn={0}
+                                onPress={() => {ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER); this.setState({fullscreen: !this.state.fullscreen})}}
+                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                            >
+                                <View>
+                                    <Icon style={styles.icon}
+                                          name={this.state.fullscreen ? "fullscreen-exit" : "fullscreen"}
+                                          size={28} />
+                                </View>
+                            </TouchableNativeFeedback>
                         </View>
                     </View>
                 </Animated.View>
@@ -225,6 +250,7 @@ const styles = StyleSheet.create({
         color: uiTheme.palette.textColor,
         flex: 1,
         fontWeight: "bold",
+        textAlign: "center"
     },
     slider: {
         flex: 10
@@ -256,13 +282,17 @@ const styles = StyleSheet.create({
     },
     topLeftControls: {
         flex: 9,
-        backgroundColor: "blue",
     },
     topRightControls: {
         justifyContent: "flex-end",
-        backgroundColor: "red",
     },
-    optionIcon: {
-        backgroundColor: "yellow"
+    icon: {
+        color: uiTheme.palette.textColor,
+        fontWeight: "bold",
+    },
+    middle: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
     }
 });
