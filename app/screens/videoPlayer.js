@@ -5,11 +5,17 @@ import React, {
 import {
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
+    Slider,
+    Animated,
+    TouchableWithoutFeedback,
+    TouchableNativeFeedback,
+    ToastAndroid
 } from 'react-native';
-  
 import Video from 'react-native-video';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import uiTheme from "../uiTheme"
   
 export default class VideoPlayer extends Component {
   
@@ -21,130 +27,152 @@ export default class VideoPlayer extends Component {
       duration: 0.0,
       currentTime: 0.0,
       paused: true,
+      fullscreen: false,
+      controlsPosition: new Animated.Value(0), // change this the remove/add the controls
+      controlsOpacity: new Animated.Value(1),
+      controls: true,
     };
   
     onLoad = (data) => {
-      this.setState({ duration: data.duration });
+        this.setState({
+            duration: data.duration,
+            paused: !this.state.paused,
+        });
     };
   
     onProgress = (data) => {
-      this.setState({ currentTime: data.currentTime });
+        this.setState({
+            currentTime: data.currentTime,
+        });
     };
   
     onEnd = () => {
-      this.setState({ paused: true })
-      this.video.seek(0)
+        this.setState({
+            paused: true,
+        })
+        this.video.seek(0)
+        // todo ask if the user wants to see the next video
     };
   
     onAudioBecomingNoisy = () => {
-      this.setState({ paused: true })
+        this.setState({
+            paused: true,
+        })
     };
   
     onAudioFocusChanged = (event) => {
-      this.setState({ paused: !event.hasAudioFocus })
+        this.setState({
+            paused: !event.hasAudioFocus,
+        })
     };
-  
-    getCurrentTimePercentage() {
-      if (this.state.currentTime > 0) {
-        return parseFloat(this.state.currentTime) / parseFloat(this.state.duration);
-      }
-      return 0;
-    };
-  
-    renderRateControl(rate) {
-      const isSelected = (this.state.rate === rate);
-  
-      return (
-        <TouchableOpacity onPress={() => { this.setState({ rate }) }}>
-          <Text style={[styles.controlOption, { fontWeight: isSelected ? 'bold' : 'normal' }]}>
-            {rate}x
-          </Text>
-        </TouchableOpacity>
-      );
+
+    time(duration) {
+        const minutes = parse(parseInt(duration/60));
+        const hours = parseInt(minutes/60);
+        const seconds = parse(parseInt(duration%60));
+        if(hours > 0) {
+            return `${hours}:${minutes}:${seconds}`
+        }
+        return minutes+":"+seconds
+
+        function parse(int) {
+            if(int < 10) {
+                return "0"+int
+            }
+            return int
+        }
     }
-  
-    renderResizeModeControl(resizeMode) {
-      const isSelected = (this.state.resizeMode === resizeMode);
-  
-      return (
-        <TouchableOpacity onPress={() => { this.setState({ resizeMode }) }}>
-          <Text style={[styles.controlOption, { fontWeight: isSelected ? 'bold' : 'normal' }]}>
-            {resizeMode}
-          </Text>
-        </TouchableOpacity>
-      )
-    }
-  
-    renderVolumeControl(volume) {
-      const isSelected = (this.state.volume === volume);
-  
-      return (
-        <TouchableOpacity onPress={() => { this.setState({ volume }) }}>
-          <Text style={[styles.controlOption, { fontWeight: isSelected ? 'bold' : 'normal' }]}>
-            {volume * 100}%
-          </Text>
-        </TouchableOpacity>
-      )
+
+    toggleControls() {
+        Animated.timing(  // Animate value over time
+            this.state.controlsPosition,  // The value to drive
+            { 
+                toValue: this.state.controls ? 60 : 0,
+                duration: 100
+            }
+        ).start();
+        Animated.timing(  // Animate value over time
+            this.state.controlsOpacity,  // The value to drive
+            { 
+                toValue: this.state.controls ? 0 : 1,
+                duration: 200
+            }
+        ).start();
+        this.setState({
+            controls: !this.state.controls
+        })
     }
   
     render() {
-        const flexCompleted = this.getCurrentTimePercentage() * 100;
-        const flexRemaining = (1 - this.getCurrentTimePercentage()) * 100;
         const params = this.props.navigation.state.params || {};
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    style={styles.fullScreen}
-                    onPress={() => this.setState({ paused: !this.state.paused })}
-                >
+                <TouchableWithoutFeedback onPress={() => this.toggleControls()}>
                     <Video
-                    ref={(ref) => { this.video = ref }}
-                    source={{uri: params.video.src}}
-                    style={styles.fullScreen}
-                    rate={this.state.rate}
-                    paused={this.state.paused}
-                    volume={this.state.volume}
-                    muted={this.state.muted}
-                    resizeMode={this.state.resizeMode}
-                    onLoad={this.onLoad}
-                    onProgress={this.onProgress}
-                    onEnd={this.onEnd}
-                    onAudioBecomingNoisy={this.onAudioBecomingNoisy}
-                    onAudioFocusChanged={this.onAudioFocusChanged}
-                    repeat={false}
+                        ref={(ref) => { this.video = ref }}
+                        source={{uri: params.video.src || ""}}
+                        style={styles.fullScreen}
+                        rate={this.state.rate}
+                        paused={this.state.paused}
+                        volume={this.state.volume}
+                        muted={this.state.muted}
+                        resizeMode={this.state.resizeMode}
+                        onLoad={this.onLoad}
+                        onProgress={this.onProgress}
+                        onEnd={this.onEnd}
+                        onAudioBecomingNoisy={this.onAudioBecomingNoisy}
+                        onAudioFocusChanged={this.onAudioFocusChanged}
+                        repeat={false}
                     />
-                </TouchableOpacity>
-        
-                <View style={styles.controls}>
-                    <View style={styles.generalControls}>
-                        <View style={styles.rateControl}>
-                            {this.renderRateControl(0.25)}
-                            {this.renderRateControl(0.5)}
-                            {this.renderRateControl(1.0)}
-                            {this.renderRateControl(1.5)}
-                            {this.renderRateControl(2.0)}
-                        </View>
-            
-                        <View style={styles.volumeControl}>
-                            {this.renderVolumeControl(0.5)}
-                            {this.renderVolumeControl(1)}
-                            {this.renderVolumeControl(1.5)}
-                        </View>
-            
-                        <View style={styles.resizeModeControl}>
-                            {this.renderResizeModeControl('cover')}
-                            {this.renderResizeModeControl('contain')}
-                            {this.renderResizeModeControl('stretch')}
+                </TouchableWithoutFeedback>
+
+                <Animated.View style={[styles.controlsTop, styles.controls, {transform: [{translateY: Animated.multiply(this.state.controlsPosition, new Animated.Value(-1))}], opacity: this.state.controlsOpacity}]}>
+                    <View style={[styles.leftControls, styles.topLeftControls]}>
+                        <Text style={styles.text}>{params.title}</Text>
+                    </View>
+                    <View style={[styles.rightControls, styles.topRightControls]}>
+                        <View style={styles.optionIcon}>
+                            <TouchableNativeFeedback
+                                onPress={() => ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)}
+                                background={TouchableNativeFeedback.Ripple("#fff")}
+                                useForeground={true}
+                            >
+                                <Icon style={styles.text} name="more-vert" size={28} />
+                            </TouchableNativeFeedback>
                         </View>
                     </View>
-        
-                    <View style={styles.trackingControls}>
-                        <View style={styles.progress}>
-                            <View style={[styles.innerProgressCompleted, { flex: flexCompleted }]} />
-                            <View style={[styles.innerProgressRemaining, { flex: flexRemaining }]} />
-                        </View>
+                </Animated.View>
+
+                <Animated.View style={[styles.controls, styles.controlsBottom, {transform: [{translateY: this.state.controlsPosition}], opacity: this.state.controlsOpacity}]}>
+                    <View style={styles.leftControls}>
+                        <Icon 
+                            onPress={() => this.setState({paused: !this.state.paused})}
+                            style={styles.text}
+                            name={this.state.paused ? "play-arrow" : "pause"}
+                            size={32}/>
                     </View>
-                </View>
+                    <View style={styles.centerControls}>
+                        <Text style={styles.text}>
+                            {this.time(this.state.currentTime)}
+                        </Text>
+                        <Slider
+                            onValueChange={(value) => {this.video.seek(value)}}
+                            maximumValue={this.state.duration}
+                            value={this.state.currentTime}
+                            style={styles.slider}/>
+                        <Text style={styles.text}>
+                            {this.time(this.state.duration)}
+                        </Text>
+                    </View>
+                    <View style={styles.rightControls}>
+                        <Icon 
+                            onPress={() => {this.setState({fullscreen: !this.state.fullscreen}); ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)}}
+                            style={styles.text}
+                            name={this.state.fullscreen ? "fullscreen-exit" : "fullscreen"}
+                            size={32}/>
+                    </View>
+                </Animated.View>
+
             </View>
         );
     }
@@ -169,53 +197,49 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderRadius: 5,
         position: 'absolute',
-        bottom: 20,
         left: 20,
         right: 20,
+        flexDirection: "row"
     },
-    progress: {
+    controlsBottom: {
+        bottom: 20,
+    },
+    text: {
+        color: uiTheme.palette.textColor,
         flex: 1,
-        flexDirection: 'row',
-        borderRadius: 3,
-        overflow: 'hidden',
+        fontWeight: "bold",
     },
-    innerProgressCompleted: {
-        height: 20,
-        backgroundColor: '#cccccc',
+    slider: {
+        flex: 10
     },
-    innerProgressRemaining: {
-        height: 20,
-        backgroundColor: '#2C2C2C',
-    },
-    generalControls: {
+    leftControls: {
         flex: 1,
-        flexDirection: 'row',
-        borderRadius: 4,
-        overflow: 'hidden',
-        paddingBottom: 10,
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center"
     },
-    rateControl: {
+    rightControls: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
     },
-    volumeControl: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
+    centerControls: {
+        flex: 10,
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center"
     },
-    resizeModeControl: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+    controlsTop: {
+        top: 20,
     },
-    controlOption: {
-        alignSelf: 'center',
-        fontSize: 11,
-        color: 'white',
-        paddingLeft: 2,
-        paddingRight: 2,
-        lineHeight: 12,
+    topLeftControls: {
+        flex: 9,
+    },
+    topRightControls: {
+        justifyContent: "flex-end",
+    },
+    optionIcon: {
+        
     },
 });

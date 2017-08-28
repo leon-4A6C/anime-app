@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   FlatList,
+  ToastAndroid
 } from "react-native";
 import { connect } from "react-redux"
 
@@ -115,6 +116,10 @@ class Home extends React.Component {
     }
   }
 
+  onMenuClick() {
+    ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)
+  }
+
   componentDidMount() {
     // pass the functions to params of the nav
     this.props.navigation.setParams({
@@ -122,6 +127,7 @@ class Home extends React.Component {
       onRemoveSearch: this.removeSearch.bind(this),
       options: this.sortingList.map(x => x.label),
       onOptionsClick: this.optionsClick.bind(this),
+      onMenuClick: this.onMenuClick.bind(this),
     });
     // load initial items
     this._load()
@@ -174,7 +180,6 @@ class Home extends React.Component {
         items: [...this.state.items, ...this.props.top.animes]
       })
     }
-    console.log(this.props.searchResult)
     if(prevProps.searchResult.isFetching && !this.props.searchResult.isFetching && this.state.isSearch) {
       this.setState({
         items: [...this.state.items, ...this.props.searchResult.results]

@@ -3548,6 +3548,12 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-linear-gradient@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.3.0.tgz#757997197e35edf52e290891a11566e462845da1"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-mal-scrape@^1.0.91:
   version "1.0.91"
   resolved "https://registry.yarnpkg.com/react-native-mal-scrape/-/react-native-mal-scrape-1.0.91.tgz#34e7da9c5a703b15ccb4d94ee8c1856038497fc6"

@@ -13,11 +13,9 @@ import uiTheme from "../uiTheme"
 
 class Episodes extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
+  state = {
+    title: "",
+    episode: 0
   }
 
   static navigationOptions = ({navigation}) => ({
@@ -31,12 +29,17 @@ class Episodes extends React.Component {
 
   episodePress(props, state) {
     // fire episode action and open video player
-    this.props.getEpisode(this.props.episodes.episodes[props.episodeNumber])
+    const episode = this.props.episodes.episodes[props.episodeNumber];
+    this.props.getEpisode(episode)
+    this.setState({
+      title: episode.titles[0] || episode.titles[1],
+      episode: props.episodeNumber
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.episode.isFetching && !this.props.episode.isFetching) {
-      this.props.navigation.navigate("VideoPlayer", {video: this.props.episode.episode[0]})
+      this.props.navigation.navigate("VideoPlayer", {video: this.props.episode.episode[0], title: this.state.title, episode: this.state.episode}) // pass the title and episode
     }
   }
 

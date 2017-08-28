@@ -21,15 +21,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.6.0/3f9b16b774f2c36cfd86dd2053d0b3059531dacc/okhttp-urlconnection-3.6.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="3f9b16b774f2c36cfd86dd2053d0b3059531dacc">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.6.0_60e99c00415d00b178658959c297a6fecbbbe7cb.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/1.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -45,15 +36,6 @@
         revision="23.0.1"
         sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
         <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_7bb1e93bde15806b0b78e7370c8265cf6d8beb4a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/1.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="050f688115ea65a0292d8483a6ffe6bcdab1e2ef">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-1.0.1_046903099b374d2ff94d519a12e1c79cdf8f4900.jar" />
     </item>
     <item
         is-multidex="false"
@@ -84,15 +66,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/leon/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0_870aab844c05d6062405ccfcaed00a62a8655ffe.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/1.0.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -117,6 +90,78 @@
         revision="23.0.1"
         sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
         <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_867852f041c14550a41bf672cfe16fda266dc7c5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.0.1_63a1a3bae26d8a03e6c3f7d96cd92240f9d272fb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.47.2/jars/libs/infer-annotations-4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/infer-annotations-4.0_4bf563684d7bf01b6c125604fe47d937a4d4cacd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_c3c2817b5862ee6729ade9f61df73ce318faf4e7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_614e0aef10c4b024fabc189a34e4450db6e0127c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-linear-gradient/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="893e064c0bff9f36d76bda153d1f19148d013e93">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/anime-react-native-linear-gradient-unspecified_1090adbf116c842422e75751e3492d7b8737da6c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.6.0/3f9b16b774f2c36cfd86dd2053d0b3059531dacc/okhttp-urlconnection-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3f9b16b774f2c36cfd86dd2053d0b3059531dacc">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.6.0_60e99c00415d00b178658959c297a6fecbbbe7cb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="050f688115ea65a0292d8483a6ffe6bcdab1e2ef">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-1.0.1_046903099b374d2ff94d519a12e1c79cdf8f4900.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/leon/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0_870aab844c05d6062405ccfcaed00a62a8655ffe.jar" />
     </item>
     <item
         is-multidex="false"
@@ -165,48 +210,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.0.1_63a1a3bae26d8a03e6c3f7d96cd92240f9d272fb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.47.2/jars/libs/infer-annotations-4.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/infer-annotations-4.0_4bf563684d7bf01b6c125604fe47d937a4d4cacd.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-video/unspecified/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="ef95b760ce8044838ea4a8e3c550bcb13d908b21">
         <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/anime-react-native-video-unspecified_b103743148e56739cb954693dfd30f1da393366d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.0.1_c3c2817b5862ee6729ade9f61df73ce318faf4e7.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/leon/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/javax.inject-1_614e0aef10c4b024fabc189a34e4450db6e0127c.jar" />
     </item>
     <item
         is-multidex="false"
