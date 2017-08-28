@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux"
 
-import { top } from "../actions"
+import { top, search } from "../actions"
 import { Item, SearchBar } from "../components"
 
 class Home extends React.Component {
@@ -19,7 +19,10 @@ class Home extends React.Component {
       items: [],
       limit: 0,
       sort: "",
-      sorting: {}
+      sorting: {},
+      searchText: "",
+      isSearch: false,
+      show: 0, // same as limit but then for searches
     }
 
     this.sortingList = [
@@ -79,11 +82,25 @@ class Home extends React.Component {
   }
 
   searched(text) {
-    console.log("searched for: " + text)
+    this.setState({
+      items: [],
+      isSearch: true,
+      show: 0,
+      limit: 0,
+      searchText: text
+    })
+    this._load()
   }
 
   removeSearch(text) {
-    console.log("remove search for: " + text)
+    this.setState({
+      items: [],
+      isSearch: false,
+      show: 0,
+      limit: 0,
+      searchText: ""
+    })
+    this._load()
   }
 
   optionsClick(option) {
@@ -126,11 +143,18 @@ class Home extends React.Component {
 
   _load() {
     console.log("hit bottom");
-    if (!this.props.top.isFetching) {
-      const { limit } = this.state;
-      this.props.getTop({...this.state.sorting, limit: limit})
+    const { limit, show, searchText } = this.state;
+    
+    if (!this.props.top.isFetching && !this.state.isSearch) {
+      this.props.getTop({...this.state.sorting, limit})
       this.setState({
         limit: limit + 50
+      })
+    }
+    if (!this.props.searchResult.isFetching && this.state.isSearch) {
+      this.props.search(searchText, {show})
+      this.setState({
+        show: show + 50
       })
     }
   }
@@ -145,9 +169,15 @@ class Home extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.top.isFetching && !this.props.top.isFetching) {
+    if(prevProps.top.isFetching && !this.props.top.isFetching && !this.state.isSearch) {
       this.setState({
         items: [...this.state.items, ...this.props.top.animes]
+      })
+    }
+    console.log(this.props.searchResult)
+    if(prevProps.searchResult.isFetching && !this.props.searchResult.isFetching && this.state.isSearch) {
+      this.setState({
+        items: [...this.state.items, ...this.props.searchResult.results]
       })
     }
   }
@@ -174,12 +204,14 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    top: state.top
+    top: state.top,
+    searchResult: state.search,
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    getTop: (options) => dispatch(top.fetchTop(options))
+    getTop: (options) => dispatch(top.fetchTop(options)),
+    search: (name, options) => dispatch(search.fetchSearch(name, options)),
   }
 }
 

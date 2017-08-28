@@ -9,7 +9,7 @@ const ItemInfo = TabNavigator({
 }, {
   tabBarOptions: {
     labelStyle: {
-      fontSize: 14,
+      fontSize: uiTheme.text.fontSize,
     },
     tabStyle: {
          

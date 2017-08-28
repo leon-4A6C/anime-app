@@ -1,6 +1,5 @@
 import React from "react"
 import {
-  View,
   SectionList,
   Text,
   StyleSheet,
@@ -52,17 +51,15 @@ class Episodes extends React.Component {
       }
 
       return (
-        <View>
-          <SectionList 
-            sections={[ // heterogeneous rendering between sections
-                {data: next, title: "next episodes"},
-                {data: eps, title: "all episodes"},
-              ]}
-            renderItem={({item}) => <Episode episodeName={item.titles[1] || item.titles[0]} episodeNumber={item.episode} onPress={this.episodePress.bind(this)}/>}
-            renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-            keyExtractor={(item) => item.episode}
-            />
-        </View>
+        <SectionList 
+          sections={[ // heterogeneous rendering between sections
+              {data: next, title: "next episodes"},
+              {data: eps, title: "all episodes"},
+            ]}
+          renderItem={({item}) => <Episode episodeName={item.titles[1] || item.titles[0]} episodeNumber={item.episode} onPress={this.episodePress.bind(this)}/>}
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          keyExtractor={(item) => item.episode}
+          />
       )
     }
   }
