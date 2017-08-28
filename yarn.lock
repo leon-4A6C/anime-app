@@ -3573,6 +3573,10 @@ react-native-material-ui@^1.13.0:
     prop-types "^15.5.10"
     react-native-material-design-styles "^0.2.6"
 
+react-native-orientation@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-orientation/-/react-native-orientation-3.0.0.tgz#91a0a55be2d1f14ec6d0111a3bfbb5550a2e788b"
+
 react-native-parse-html@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/react-native-parse-html/-/react-native-parse-html-2.2.6.tgz#21f28f97b38407784759bc59e244b51109d9cc87"
