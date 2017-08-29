@@ -138,6 +138,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-immersive/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="5b70aba851ac4b423789e07a0f0bd61bbdd68abc">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/anime-react-native-immersive-unspecified_f60ce9e60a939bc749af9bd35854daab9f2dc656.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/leon/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.6.0/3f9b16b774f2c36cfd86dd2053d0b3059531dacc/okhttp-urlconnection-3.6.0.jar"
         jumboMode="false"
         optimize="true"

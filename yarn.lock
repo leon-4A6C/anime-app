@@ -3548,6 +3548,10 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-immersive@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-immersive/-/react-native-immersive-1.0.0.tgz#34114ed6c713d2a2689f74916d51b30aba679f4e"
+
 react-native-linear-gradient@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.3.0.tgz#757997197e35edf52e290891a11566e462845da1"

@@ -26,6 +26,7 @@ MERGED from [com.facebook.react:react-native:0.47.2] /home/leon/github/anime-app
 		ADDED from /home/leon/github/anime-app/android/app/src/main/AndroidManifest.xml:7:22-75
 uses-sdk
 ADDED from /home/leon/github/anime-app/android/app/src/main/AndroidManifest.xml:9:5-11:41
+MERGED from [anime:react-native-immersive:unspecified] /home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-immersive/unspecified/AndroidManifest.xml:7:5-9:41
 MERGED from [anime:react-native-orientation:unspecified] /home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-orientation/unspecified/AndroidManifest.xml:7:5-9:41
 MERGED from [anime:react-native-linear-gradient:unspecified] /home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-linear-gradient/unspecified/AndroidManifest.xml:7:5-9:41
 MERGED from [anime:react-native-video:unspecified] /home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-video/unspecified/AndroidManifest.xml:7:5-9:41

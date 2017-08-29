@@ -9,10 +9,12 @@ import {
     TouchableNativeFeedback,
     ToastAndroid,
     ActivityIndicator,
+    StatusBar,
 } from 'react-native';
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Orientation from 'react-native-orientation';
+import { Immersive } from 'react-native-immersive'
 
 import uiTheme from "../uiTheme"
   
@@ -57,7 +59,7 @@ export default class VideoPlayer extends React.Component {
         this.setState({
             paused: true,
         })
-        this.video.seek(0)
+        this.player.seek(0)
         // todo ask if the user wants to see the next video
     };
   
@@ -116,6 +118,24 @@ export default class VideoPlayer extends React.Component {
 
     componentWillUnmount() {
         Orientation.unlockAllOrientations()
+        Immersive.off()
+        Immersive.setImmersive(false)
+        StatusBar.setHidden(false)
+    }
+
+    toggleFullScreen() {
+        if(this.state.fullscreen) {
+            Immersive.off()        
+            Immersive.setImmersive(false)
+            StatusBar.setHidden(false)
+        } else {
+            Immersive.on()
+            Immersive.setImmersive(true)
+            StatusBar.setHidden(true)
+        }
+        this.setState({
+            fullscreen: !this.state.fullscreen
+        });
     }
   
     render() {
@@ -124,7 +144,7 @@ export default class VideoPlayer extends React.Component {
             <View style={styles.container}>
                 <TouchableWithoutFeedback onPress={() => this.toggleControls()}>
                     <Video
-                        ref={(ref) => { this.video = ref }}
+                        ref={(ref) => { this.player = ref }}
                         source={{uri: params.video.src || ""}}
                         style={styles.fullScreen}
                         rate={this.state.rate}
@@ -147,7 +167,18 @@ export default class VideoPlayer extends React.Component {
 
                 <Animated.View style={[styles.controlsTop, styles.controls, {transform: [{translateY: Animated.multiply(this.state.controlsPosition, new Animated.Value(-1))}], opacity: this.state.controlsOpacity}]}>
                     <View style={[styles.leftControls, styles.topLeftControls]}>
-                        <Text style={[styles.text, {textAlign: "left"}]}>{params.title}</Text>
+                        <View>
+                            <TouchableNativeFeedback
+                                delayPressIn={0}
+                                onPress={() => this.props.navigation.goBack()}
+                                background={TouchableNativeFeedback.Ripple("#fff", true)}
+                            >
+                                <View>
+                                    <Icon style={styles.icon} name="arrow-back" size={24} />
+                                </View>
+                            </TouchableNativeFeedback>
+                        </View>
+                        <Text style={[styles.text, {textAlign: "left", marginLeft: 15}]}>{params.title}</Text>
                     </View>
                     <View style={[styles.rightControls, styles.topRightControls]}>
                         <View>
@@ -189,7 +220,7 @@ export default class VideoPlayer extends React.Component {
                             minimumTrackTintColor={uiTheme.palette.accentColor}
                             maximumTrackTintColor={uiTheme.palette.primaryColor}
                             thumbTintColor={uiTheme.palette.primaryDark}
-                            onSlidingComplete={(value) => {this.video.seek(value)}}
+                            onSlidingComplete={(value) => {this.player.seek(value)}}
                             maximumValue={this.state.duration}
                             value={this.state.currentTime}
                             style={styles.slider}/>
@@ -201,7 +232,7 @@ export default class VideoPlayer extends React.Component {
                         <View>
                             <TouchableNativeFeedback
                                 delayPressIn={0}
-                                onPress={() => {ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER); this.setState({fullscreen: !this.state.fullscreen})}}
+                                onPress={this.toggleFullScreen.bind(this)}
                                 background={TouchableNativeFeedback.Ripple("#fff", true)}
                             >
                                 <View>
