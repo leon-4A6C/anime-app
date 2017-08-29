@@ -5,6 +5,7 @@ import episode from "./episode";
 import episodes from "./episodes";
 import details from "./details";
 import search from "./search"
+import favorites from "./favorites"
 
 const rootReducer = combineReducers({
   top,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   episodes,
   details,
   search,
+  favorites,
 })
 
 export default rootReducer

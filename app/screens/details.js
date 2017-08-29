@@ -7,8 +7,9 @@ import {
 } from "react-native"
 import { connect } from "react-redux"
 
-import { details } from "../actions"
+import { details, favorites } from "../actions"
 import uiTheme from "../uiTheme"
+import { IconButton } from "../components"
 
 class Details extends React.Component {
 
@@ -19,7 +20,27 @@ class Details extends React.Component {
   componentDidMount() {
     const { params } = this.props.navigation.state;
     this.props.getDetails(params.id);
+    this.props.navigation.setParams({
+      onFavPress: this.favButtonPress.bind(this),
+      star: false,
+    });
   }
+
+  favButtonPress() {
+    this.props.navigation.setParams({
+      star: !this.props.navigation.state.params.star // get data from file
+    })
+    if(this.props.navigation.state.params.star) {
+      this.props.getFavorites();
+    } else {
+      this.props.setFavorites([{title: "bleach"}]);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props.favorites)
+  }
+  
   
 
   render() {
@@ -58,17 +79,26 @@ const styles = StyleSheet.create({
   },
   loader: {
     marginTop: 10
+  },
+  favIconStyle: {
+    color: uiTheme.palette.textColor,
+  },
+  favStyle: {
+    marginRight: 15
   }
 });
 
 function mapStateToProps(state) {
   return {
-    details: state.details
+    details: state.details,
+    favorites: state.favorites
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    getDetails: (id) => dispatch(details.fetchDetails(id))
+    getDetails: (id) => dispatch(details.fetchDetails(id)),
+    getFavorites: () => dispatch(favorites.getFavorites()),
+    setFavorites: (data) => dispatch(favorites.setFavorites(data)),
   }
 }
 

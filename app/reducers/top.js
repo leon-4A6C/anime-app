@@ -20,7 +20,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        animes: action.data
+        animes: action.data,
+        error: false
       }
       break;
     case FETCHING_TOP_FAILURE:

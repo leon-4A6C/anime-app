@@ -20,7 +20,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        details: action.data
+        details: action.data,
+        error: false
       }
       break;
     case FETCHING_DETAILS_FAILURE:

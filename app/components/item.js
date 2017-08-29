@@ -3,12 +3,19 @@ import {
   Image,
   TouchableHighlight,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  ActivityIndicator,
+  View,
 } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import uiTheme from "../uiTheme"
 
-export default class home extends React.Component {
+export default class Item extends React.Component {
+  
+  state = {
+    loading: true,
+  }
 
   _press() {
     this.props.onPress(this.props, this.state);
@@ -23,10 +30,16 @@ export default class home extends React.Component {
     return (
       <TouchableHighlight
         onPress={this._press.bind(this)}
-        style={styles.container}
         onLongPress={this._longPress.bind(this)}
         >
-        <Image source={{uri: this.props.uri}} style={{width: dim.width/3, height: dim.width/3*1.5}}/>
+        <View style={{width: dim.width/3, height: dim.width/3*1.5}}>
+          <View style={[styles.fullScreen, styles.middle]}>
+            {this.state.loading ? <ActivityIndicator size="large"/> : null}
+          </View>
+          <Image
+            onLoadEnd={() => this.setState({loading: false})}
+            source={{uri: this.props.uri}} style={{width: dim.width/3, height: dim.width/3*1.5}}/>
+        </View>
       </TouchableHighlight>
     );
   }
@@ -36,5 +49,17 @@ export default class home extends React.Component {
 const styles = StyleSheet.create({
   container: {
     
+  },
+  fullScreen: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
+  middle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
 });

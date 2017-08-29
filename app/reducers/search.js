@@ -20,7 +20,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        results: action.data
+        results: action.data,
+        error: false
       }
       break;
     case FETCHING_SEARCH_FAILURE:

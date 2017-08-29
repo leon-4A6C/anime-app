@@ -14,7 +14,8 @@ import {
 import Video from 'react-native-video';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Orientation from 'react-native-orientation';
-import { Immersive } from 'react-native-immersive'
+import { Immersive } from 'react-native-immersive';
+import LinearGradient from "react-native-linear-gradient"
 
 import uiTheme from "../uiTheme"
   
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        flexDirection: "row"
+        flexDirection: "row",
     },
     controlsBottom: {
         bottom: 10,
