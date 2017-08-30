@@ -11,115 +11,143 @@ import {
     FAVORITES_GET_FAILURE,
     FAVORITES_SET,
     FAVORITES_SET_SUCCES,
-    FAVORITES_SET_FAILURE
+    FAVORITES_SET_FAILURE,
+    FAVORITES_CHECK,
+    FAVORITES_CHECK_SUCCES,
+    FAVORITES_CHECK_FAILURE,
+    FAVORITES_ADD,
+    FAVORITES_ADD_SUCCES,
+    FAVORITES_ADD_FAILURE,
+    FAVORITES_REMOVE,
+    FAVORITES_REMOVE_SUCCES,
+    FAVORITES_REMOVE_FAILURE,
+    start,
+    failure,
+    succes
 } from "../constants"
+
+const file = fs.dirs.DocumentDir+"/favoritedAnime.json"; // favorites is store in an object(hash table with mal ids)
+
+function checkPermission() {
+    return PermissionsAndroid.requestMultiple(
+        [
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+        ], {
+          title: 'Permission',
+          message: 'permission needed to save files',
+        }
+      ).then(permRes => {
+          return new Promise((resolve, reject) => {
+            if (permRes['android.permission.READ_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED &&
+                permRes['android.permission.WRITE_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("got permissions")
+                resolve()
+            } else {
+                reject(new Error("did not give permissions"))
+            }
+          })
+      })
+}
 
 export function getFavorites() {
     return (dispatch) => {
-        const file = fs.dirs.DocumentDir+"/favoritedAnime.json";
-        dispatch(getFavoritesStart())
-        PermissionsAndroid.requestMultiple(
-            [
-              PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-            ], {
-              title: 'Permission',
-              message: 'permission needed to save files',
-            }
-          ).then((permRes) => {
-                if (permRes['android.permission.READ_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED &&
-                    permRes['android.permission.WRITE_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED) {
-                    console.log("got permissions")
-                    return fs.exists(file);
-                } else throw new Error("did not give permissions")
-          }).then((exist) => {
-              if(exist) {
-                  return fs.readFile(file, "utf8");
-              } else {
-                  dispatch(getFavoritesSuccess([])) // return an empty array
-              }
-          }).then(data => {
-              dispatch(getFavoritesSuccess(JSON.parse(data)))
-          }).catch(err => {console.log(err); dispatch(getFavoritesFailure())})
+        dispatch(start(FAVORITES_GET))
+
+        checkPermission()
+            .then(() => fs.exists(file))
+            .then((exist) => {
+                if(exist) {
+                    return fs.readFile(file, "utf8");
+                } else {
+                    dispatch(succes(FAVORITES_GET_SUCCES, {})) // return an empty array
+                }
+            }).then(data => dispatch(succes(FAVORITES_GET_SUCCES, JSON.parse(data))))
+            .catch(err => {console.log(err); dispatch(failure(FAVORITES_GET_FAILURE, err))})
     }
 }
 
 export function setFavorites(data) {
     return (dispatch) => {
-        const file = fs.dirs.DocumentDir+"/favoritedAnime.json";
-        dispatch(setFavoritesStart())
-        PermissionsAndroid.requestMultiple(
-            [
-              PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-            ], {
-              title: 'Permission',
-              message: 'permission needed to save files',
-            }
-          ).then((permRes) => {
-                if (permRes['android.permission.READ_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED &&
-                    permRes['android.permission.WRITE_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED) {
-                    console.log("got permissions")
-                    return fs.exists(file);
-                } else throw new Error("did not give permissions")
-          }).then((exist) => {
-            if(exist) {
-                return fs.writeFile(file, JSON.stringify(data));
-            } else {
-                return fs.createFile(file, JSON.stringify(data));
-            }
-          }).then(() => {
-                dispatch(setFavoritesSuccess())
-          }).catch(err => {console.log(err); dispatch(setFavoritesFailure())})
+        dispatch(start(FAVORITES_SET))
+        
+        checkPermission()
+            .then(() => fs.exists(file))
+            .then((exist) => {
+                if(exist) {
+                    return fs.writeFile(file, JSON.stringify(data));
+                } else {
+                    return fs.createFile(file, JSON.stringify(data));
+                }
+            }).then(() => dispatch(succes(FAVORITES_SET_SUCCES)))
+            .catch(err => {console.log(err); dispatch(failure(FAVORITES_SET_FAILURE, err))})
     }
 }
 
-export function addFavorite() {
+// checks if the item is favorited
+export function checkFavorite(id) {
     return (dispatch) => {
-
+        dispatch(start(FAVORITES_CHECK))
+        checkPermission()
+            .then(() => fs.exists(file))
+            .then(exist => {
+                if(exist) {
+                    return fs.readFile(file, "utf8")
+                } else {
+                    dispatch(succes(FAVORITES_CHECK_SUCCES, true))
+                }
+            }).then(data => {
+                data = JSON.parse(data);
+                if(data[id]) {
+                    dispatch(succes(FAVORITES_CHECK_SUCCES, true))
+                } else {
+                    dispatch(succes(FAVORITES_CHECK_SUCCES, false))
+                }
+            })
+            .catch(e => {console.log(e); dispatch(failure(FAVORITES_CHECK_FAILURE, e))})
     }
 }
 
-export function removeFavorite() {
+export function addFavorite(item) {
     return (dispatch) => {
-
+        dispatch(start(FAVORITES_ADD))
+        checkPermission()
+            .then(() => fs.exists(file))
+            .then(exist => {
+                if(exist) {
+                    return fs.readFile(file, "utf8")
+                } else {
+                    return fs.createFile(file, "{}")
+                        .then(() => fs.readFile(file, "utf8"))
+                }
+            }).then(data => {
+                data = JSON.parse(data);
+                data[item.id] = item;
+                return fs.writeFile(file, JSON.stringify(data))
+            })
+            .then(() => dispatch(succes(FAVORITES_ADD_SUCCES)))
+            .catch(e => {console.log(e); dispatch(failure(FAVORITES_ADD_FAILURE, e))})
     }
 }
 
-export function getFavoritesStart() {
-    return {
-        type: FAVORITES_GET
-    }
-}
-
-export function getFavoritesSuccess(data) {
-    return {
-        type: FAVORITES_GET_SUCCES,
-        data,
-    }
-}
-
-export function getFavoritesFailure() {
-    return {
-        type: FAVORITES_GET_FAILURE
-    }
-}
-
-export function setFavoritesStart() {
-    return {
-      type: FAVORITES_SET
-    }
-}
-  
-export function setFavoritesSuccess(data) {
-    return {
-      type: FAVORITES_SET_SUCCES,
-      data,
-    }
-}
-  
-export function setFavoritesFailure() {
-    return {
-      type: FAVORITES_SET_FAILURE
+export function removeFavorite(id) {
+    return (dispatch) => {
+        dispatch(start(FAVORITES_REMOVE))
+        checkPermission()
+            .then(() => fs.exists(file))
+            .then(exist => {
+                if(exist) {
+                    return fs.readFile(file, "utf8")
+                } else {
+                    return fs.createFile(file, "{}")
+                        .then(() => fs.readFile(file, "utf8"))
+                }
+            }).then(data => {
+                data = JSON.parse(data);
+                delete data[item.id];
+                return fs.writeFile(file, JSON.stringify(data))
+            })
+            .then(() => dispatch(succes(FAVORITES_REMOVE_SUCCES)))
+            .catch(e => {console.log(e); dispatch(failure(FAVORITES_REMOVE_FAILURE, e))})
     }
 }
