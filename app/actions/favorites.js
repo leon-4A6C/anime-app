@@ -94,7 +94,7 @@ export function checkFavorite(id) {
                 if(exist) {
                     return fs.readFile(file, "utf8")
                 } else {
-                    dispatch(succes(FAVORITES_CHECK_SUCCES, true))
+                    dispatch(succes(FAVORITES_CHECK_SUCCES, false))
                 }
             }).then(data => {
                 data = JSON.parse(data);
