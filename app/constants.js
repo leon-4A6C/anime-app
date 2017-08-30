@@ -1,3 +1,23 @@
+export function start(type) {
+    return {
+        type
+    }
+}
+
+export function succes(type, data) {
+    return {
+        type,
+        data
+    }
+}
+
+export function failure(type, error) {
+    return {
+        type,
+        error
+    }
+}
+
 export const FETCHING_TOP = "FETCHING_TOP"
 export const FETCHING_TOP_SUCCES = "FETCHING_TOP_SUCCES"
 export const FETCHING_TOP_FAILURE = "FETCHING_TOP_FAILURE"
@@ -25,3 +45,15 @@ export const FAVORITES_GET_FAILURE = "FAVORITES_GET_FAILURE"
 export const FAVORITES_SET = "FAVORITES_SET"
 export const FAVORITES_SET_SUCCES = "FAVORITES_SET_SUCCES"
 export const FAVORITES_SET_FAILURE = "FAVORITES_SET_FAILURE"
+
+export const FAVORITES_CHECK = "FAVORITES_CHECK"
+export const FAVORITES_CHECK_SUCCES = "FAVORITES_CHECK_SUCCES"
+export const FAVORITES_CHECK_FAILURE = "FAVORITES_CHECK_FAILURE"
+
+export const FAVORITES_ADD = "FAVORITES_ADD"
+export const FAVORITES_ADD_SUCCES = "FAVORITES_ADD_SUCCES"
+export const FAVORITES_ADD_FAILURE = "FAVORITES_ADD_FAILURE"
+
+export const FAVORITES_REMOVE = "FAVORITES_REMOVE"
+export const FAVORITES_REMOVE_SUCCES = "FAVORITES_REMOVE_SUCCES"
+export const FAVORITES_REMOVE_FAILURE = "FAVORITES_REMOVE_FAILURE"
