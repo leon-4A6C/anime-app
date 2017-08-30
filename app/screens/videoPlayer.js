@@ -18,6 +18,8 @@ import { Immersive } from 'react-native-immersive';
 import LinearGradient from "react-native-linear-gradient"
 import KeepAwake from 'react-native-keep-awake';
 
+import { IconButton } from "../components"
+
 import uiTheme from "../uiTheme"
   
 export default class VideoPlayer extends React.Component {
@@ -78,8 +80,8 @@ export default class VideoPlayer extends React.Component {
     };
 
     time(duration) {
-        const minutes = parse(parseInt(duration/60));
-        const hours = parseInt(minutes/60);
+        const minutes = parse(parseInt(duration/60%60));
+        const hours = parseInt(duration/60/60);
         const seconds = parse(parseInt(duration%60));
         if(hours > 0) {
             return `${hours}:${minutes}:${seconds}`
@@ -170,50 +172,35 @@ export default class VideoPlayer extends React.Component {
 
                 <Animated.View style={[styles.controlsTop, styles.controls, {transform: [{translateY: Animated.multiply(this.state.controlsPosition, new Animated.Value(-1))}], opacity: this.state.controlsOpacity}]}>
                     <View style={[styles.leftControls, styles.topLeftControls]}>
-                        <View>
-                            <TouchableNativeFeedback
-                                delayPressIn={0}
-                                onPress={() => this.props.navigation.goBack()}
-                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                            >
-                                <View>
-                                    <Icon style={styles.icon} name="arrow-back" size={24} />
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
+                        <IconButton 
+                            onPress={() => this.props.navigation.goBack()}
+                            iconPack="MaterialIcons"
+                            name="arrow-back"
+                            size={24}
+                            iconStyle={styles.icon}
+                        />
                         <Text style={[styles.text, {textAlign: "left", marginLeft: 15}]}>{params.title}</Text>
                     </View>
                     <View style={[styles.rightControls, styles.topRightControls]}>
-                        <View>
-                            <TouchableNativeFeedback
-                                delayPressIn={0}
-                                onPress={() => ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)}
-                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                            >
-                                <View>
-                                    <Icon style={styles.icon} name="more-vert" size={28} />
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
+                        <IconButton
+                            onPress={() => ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)}
+                            iconStyle={styles.icon}
+                            iconPack="MaterialIcons"
+                            name="more-vert"
+                            size={28}
+                        />
                     </View>
                 </Animated.View>
 
                 <Animated.View style={[styles.controls, styles.controlsBottom, {transform: [{translateY: this.state.controlsPosition}], opacity: this.state.controlsOpacity}]}>
                     <View style={styles.leftControls}>
-                        <View>
-                            <TouchableNativeFeedback
-                                delayPressIn={0}
-                                onPress={() => this.setState({paused: !this.state.paused})}
-                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                            >
-                                <View>
-                                    <Icon 
-                                        style={styles.icon}
-                                        name={this.state.paused ? "play-arrow" : "pause"}
-                                        size={32}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
+                        <IconButton
+                            iconStyle={styles.icon}
+                            name={this.state.paused ? "play-arrow" : "pause"}
+                            iconPack="MaterialIcons"
+                            size={32}
+                            onPress={() => this.setState({paused: !this.state.paused})}
+                        />
                     </View>
                     <View style={styles.centerControls}>
                         <Text style={styles.text}>
@@ -232,19 +219,13 @@ export default class VideoPlayer extends React.Component {
                         </Text>
                     </View>
                     <View style={styles.rightControls}>
-                        <View>
-                            <TouchableNativeFeedback
-                                delayPressIn={0}
-                                onPress={this.toggleFullScreen.bind(this)}
-                                background={TouchableNativeFeedback.Ripple("#fff", true)}
-                            >
-                                <View>
-                                    <Icon style={styles.icon}
-                                          name={this.state.fullscreen ? "fullscreen-exit" : "fullscreen"}
-                                          size={28} />
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
+                        <IconButton
+                            onPress={this.toggleFullScreen.bind(this)}
+                            iconStyle={styles.icon}
+                            name={this.state.fullscreen ? "fullscreen-exit" : "fullscreen"}
+                            iconPack="MaterialIcons"
+                            size={28}
+                        />
                     </View>
                 </Animated.View>
 
@@ -287,7 +268,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     slider: {
-        flex: 10
+        flex: 9
     },
     leftControls: {
         padding: 10,
