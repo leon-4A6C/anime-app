@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Orientation from 'react-native-orientation';
 import { Immersive } from 'react-native-immersive';
 import LinearGradient from "react-native-linear-gradient"
+import KeepAwake from 'react-native-keep-awake';
 
 import uiTheme from "../uiTheme"
   
@@ -143,6 +144,7 @@ export default class VideoPlayer extends React.Component {
         const params = this.props.navigation.state.params || {};
         return (
             <View style={styles.container}>
+                <KeepAwake/>
                 <TouchableWithoutFeedback onPress={() => this.toggleControls()}>
                     <Video
                         ref={(ref) => { this.player = ref }}
