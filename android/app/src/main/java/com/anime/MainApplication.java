@@ -3,6 +3,7 @@ package com.anime;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.corbt.keepawake.KCKeepAwakePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.rnimmersive.RNImmersivePackage;
 import com.github.yamill.orientation.OrientationPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new KCKeepAwakePackage(),
             new RNFetchBlobPackage(),
             new RNImmersivePackage(),
             new OrientationPackage(),

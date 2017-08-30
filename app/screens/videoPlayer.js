@@ -40,7 +40,6 @@ export default class VideoPlayer extends React.Component {
     };
   
     onLoad = (data) => {
-        console.log("onLoad!")
         this.setState({
             duration: data.duration,
             paused: !this.state.paused,
@@ -52,7 +51,6 @@ export default class VideoPlayer extends React.Component {
         if(data.playableDuration <= data.currentTime) {
             loading = true;
         }
-        console.log(data, loading)
         this.setState({
             currentTime: data.currentTime,
             loading

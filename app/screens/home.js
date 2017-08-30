@@ -173,7 +173,7 @@ class Home extends React.Component {
 
   _itemPress(props, state) {
     const { navigate } = this.props.navigation;
-    navigate("ItemInfo", props);
+    navigate("ItemInfo", {data: props.data});
   }
 
   _itemLongPress(props, state) {
@@ -214,10 +214,7 @@ class Home extends React.Component {
         onLayout={this.layoutChange.bind(this)}
         data={this.state.items}
         renderItem={({item}) => (<Item
-                                    uri={item.posters.big}
-                                    name={item.title}
-                                    id={item.id}
-                                    rank={item.ranking}
+                                    data={item}
                                     onPress={this._itemPress.bind(this)}
                                     onLongPress={this._itemLongPress.bind(this)}/>)}
         onEndReached={this._load.bind(this)}

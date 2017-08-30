@@ -5,12 +5,19 @@ export default {
       primaryColor: COLOR.teal500,
       primaryDarker: COLOR.teal900,
       primaryDark: COLOR.teal700,
+      primarylighter: COLOR.teal100,
+      primarylight: COLOR.teal300,
       accentColor: COLOR.tealA700,
-      textColor: COLOR.white
+      secundaryColor: COLOR.blueGrey500,
+      secundaryDarker: COLOR.blueGrey900,
+      secundaryDark: COLOR.blueGrey700,
+      secundaryLighter: COLOR.blueGrey100,
+      secundaryLight: COLOR.blueGrey300,
+      textColor: COLOR.white,
     },
     toolbar: {
       container: {
-        height: 50,
+        height: 56,
       },
     },
     text: {

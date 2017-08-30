@@ -26,8 +26,8 @@ class Episodes extends React.Component {
   })
 
   componentDidMount() {
-    const { name, id } = this.props.navigation.state.params;
-    this.props.getEpisodes(name, id);
+    const { title, id } = this.props.navigation.state.params.data;
+    this.props.getEpisodes(title, id);
   }
 
   episodePress(props, state) {

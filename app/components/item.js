@@ -38,7 +38,7 @@ export default class Item extends React.Component {
           </View>
           <Image
             onLoadEnd={() => this.setState({loading: false})}
-            source={{uri: this.props.uri}} style={{width: dim.width/3, height: dim.width/3*1.5}}/>
+            source={{uri: this.props.data.posters.big}} style={{width: dim.width/3, height: dim.width/3*1.5}}/>
         </View>
       </TouchableHighlight>
     );

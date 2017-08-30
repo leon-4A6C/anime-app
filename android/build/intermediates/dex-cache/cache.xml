@@ -3,6 +3,15 @@
 
     <item
         is-multidex="false"
+        jar="/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/anime/react-native-keep-awake/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="4ff7eee64d4987eadcab990f728c1b91ef9b2005">
+        <dex dex="/home/leon/github/anime-app/android/app/build/intermediates/pre-dexed/debug/anime-react-native-keep-awake-unspecified_887286cb997d1a9f589d6d86d1ad19210e4f7ff9.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/leon/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
         jumboMode="false"
         optimize="true"

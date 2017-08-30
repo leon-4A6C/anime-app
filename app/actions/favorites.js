@@ -41,7 +41,6 @@ function checkPermission() {
           return new Promise((resolve, reject) => {
             if (permRes['android.permission.READ_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED &&
                 permRes['android.permission.WRITE_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("got permissions")
                 resolve()
             } else {
                 reject(new Error("did not give permissions"))
@@ -144,7 +143,7 @@ export function removeFavorite(id) {
                 }
             }).then(data => {
                 data = JSON.parse(data);
-                delete data[item.id];
+                delete data[id];
                 return fs.writeFile(file, JSON.stringify(data))
             })
             .then(() => dispatch(succes(FAVORITES_REMOVE_SUCCES)))

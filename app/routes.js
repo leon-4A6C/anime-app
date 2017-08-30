@@ -34,7 +34,6 @@ const App = StackNavigator({
   ItemInfo: { 
     screen: ItemInfo,
     navigationOptions: ({navigation}) => {
-      console.log("the navigation: ", navigation)
       const detailsParams = navigation.state.routes.find(x => x.routeName === "Details").params; // bit of a hack, but it works
       return {
         headerStyle: {

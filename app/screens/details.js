@@ -13,32 +13,55 @@ import { IconButton } from "../components"
 
 class Details extends React.Component {
 
+  state = {
+    star: false,
+  }
+
   static navigationOptions = ({navigation}) => ({
     title: "details",
   })
 
   componentDidMount() {
-    const { params } = this.props.navigation.state;
-    this.props.getDetails(params.id);
-    this.props.navigation.setParams({
+    const { state, setParams } = this.props.navigation;
+    const data = state.params.data;
+    this.props.getDetails(data.id);
+    this.props.checkFavorite(data.id);
+    setParams({
       onFavPress: this.favButtonPress.bind(this),
       star: false,
     });
   }
 
   favButtonPress() {
-    this.props.navigation.setParams({
-      star: !this.props.navigation.state.params.star // get data from file
-    })
-    if(this.props.navigation.state.params.star) {
-      this.props.getFavorites();
+    const { favorites, navigation, setFavorites, getFavorites } = this.props;
+    const data = navigation.state.params.data;
+    if(this.state.star) {
+      this.props.removeFavorite(data.id)
     } else {
-      this.props.setFavorites([{title: "bleach"}]);
+      this.props.addFavorite(data)
     }
+    this.setState({
+      star: !this.state.star,
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
+
     console.log(this.props.favorites)
+
+    if(prevProps.favorites.check != this.props.favorites.check) {
+      this.setState({
+        star: this.props.favorites.check,
+      })
+    }
+
+    if(this.state.star != this.props.navigation.state.params.star) {
+      // update the navigation star icon
+      this.props.navigation.setParams({
+        star: this.state.star
+      })
+    }
+
   }
   
   
@@ -99,6 +122,9 @@ function mapDispatchToProps(dispatch) {
     getDetails: (id) => dispatch(details.fetchDetails(id)),
     getFavorites: () => dispatch(favorites.getFavorites()),
     setFavorites: (data) => dispatch(favorites.setFavorites(data)),
+    checkFavorite: (id) => dispatch(favorites.checkFavorite(id)),
+    addFavorite: (item) => dispatch(favorites.addFavorite(item)),
+    removeFavorite: (id) => dispatch(favorites.removeFavorite(id)),
   }
 }
 
