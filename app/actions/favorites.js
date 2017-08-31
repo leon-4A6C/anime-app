@@ -78,7 +78,7 @@ export function setFavorites(data) {
                 } else {
                     return fs.createFile(file, JSON.stringify(data));
                 }
-            }).then(() => dispatch(succes(FAVORITES_SET_SUCCES)))
+            }).then(() => {dispatch(succes(FAVORITES_SET_SUCCES)); dispatch(getFavorites())})
             .catch(err => {console.log(err); dispatch(failure(FAVORITES_SET_FAILURE, err))})
     }
 }
@@ -124,7 +124,7 @@ export function addFavorite(item) {
                 data[item.id] = item;
                 return fs.writeFile(file, JSON.stringify(data))
             })
-            .then(() => dispatch(succes(FAVORITES_ADD_SUCCES)))
+            .then(() => {dispatch(succes(FAVORITES_ADD_SUCCES)); dispatch(getFavorites())})
             .catch(e => {console.log(e); dispatch(failure(FAVORITES_ADD_FAILURE, e))})
     }
 }
@@ -146,7 +146,7 @@ export function removeFavorite(id) {
                 delete data[id];
                 return fs.writeFile(file, JSON.stringify(data))
             })
-            .then(() => dispatch(succes(FAVORITES_REMOVE_SUCCES)))
+            .then(() => {dispatch(succes(FAVORITES_REMOVE_SUCCES)); dispatch(getFavorites())})
             .catch(e => {console.log(e); dispatch(failure(FAVORITES_REMOVE_FAILURE, e))})
     }
 }

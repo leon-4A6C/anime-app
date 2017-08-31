@@ -1,10 +1,10 @@
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import React from "react"
 import {
   StyleSheet,
 } from "react-native";
 
-import { IconButton } from "./components"
+import { IconButton, SearchBar } from "./components"
 import {
   Home,
   Details,
@@ -53,6 +53,18 @@ const HomeNavigator = TabNavigator({
     },
     indicatorStyle: {
       backgroundColor: uiTheme.palette.accentColor
+    }
+  },
+  navigationOptions: ({navigation}) => {
+    const params = navigation.state.params || {};
+    return {
+      header: (<SearchBar 
+        onSearch={params.onSearched}
+        onRemoveSearch={params.onRemoveSearch}
+        onLeftElementPress={() => navigation.navigate("Settings")}
+        onOptionsClick={() => console.log(navigation)}
+        options={params.options}
+      />)
     }
   }
 })

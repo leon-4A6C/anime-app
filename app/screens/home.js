@@ -134,25 +134,14 @@ class Home extends React.Component {
       onRemoveSearch: this.removeSearch.bind(this),
       options: this.sortingList.map(x => x.label),
       onOptionsClick: this.optionsClick.bind(this),
-      onLeftElementPress: this.onLeftElementPress.bind(this),
     });
     // load initial items
     this._load()
   }
 
-  static navigationOptions = ({navigation, screenProps}) => {
-    const params = navigation.state.params || {};
-    return {
-      title: "popular",
-      header: (<SearchBar 
-                onSearch={params.onSearched}
-                onRemoveSearch={params.onRemoveSearch}
-                onLeftElementPress={params.onLeftElementPress}
-                onOptionsClick={params.onOptionsClick}
-                options={params.options}
-                />)
-    }
-  }
+  static navigationOptions = ({navigation, screenProps}) => ({
+    title: "popular"
+  })
 
   _load() {
     const { limit, show, searchText } = this.state;
