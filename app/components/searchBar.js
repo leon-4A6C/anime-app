@@ -30,9 +30,9 @@ export default class SearchBar extends React.Component {
     })
   }
 
-  _menuClick() {
-      if(this.props.onMenuClick) {
-        this.props.onMenuClick();
+  _leftElementPress() {
+      if(this.props.onLeftElementPress) {
+        this.props.onLeftElementPress();
       }
   }
 
@@ -44,8 +44,8 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (<Toolbar
-        leftElement="menu"
-        onLeftElementPress={this._menuClick.bind(this)}
+        leftElement="settings"
+        onLeftElementPress={this._leftElementPress.bind(this)}
         centerElement="anime"
         searchable={{
           autoFocus: true,

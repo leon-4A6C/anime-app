@@ -123,8 +123,8 @@ class Home extends React.Component {
     }
   }
 
-  onMenuClick() {
-    ToastAndroid.showWithGravity('not yet implemented', ToastAndroid.SHORT, ToastAndroid.CENTER)
+  onLeftElementPress() {
+    this.props.navigation.navigate("Settings")
   }
 
   componentDidMount() {
@@ -134,7 +134,7 @@ class Home extends React.Component {
       onRemoveSearch: this.removeSearch.bind(this),
       options: this.sortingList.map(x => x.label),
       onOptionsClick: this.optionsClick.bind(this),
-      onMenuClick: this.onMenuClick.bind(this),
+      onLeftElementPress: this.onLeftElementPress.bind(this),
     });
     // load initial items
     this._load()
@@ -143,11 +143,11 @@ class Home extends React.Component {
   static navigationOptions = ({navigation, screenProps}) => {
     const params = navigation.state.params || {};
     return {
-      title: "home",
+      title: "popular",
       header: (<SearchBar 
                 onSearch={params.onSearched}
                 onRemoveSearch={params.onRemoveSearch}
-                onMenuClick={params.onMenuClick}
+                onLeftElementPress={params.onLeftElementPress}
                 onOptionsClick={params.onOptionsClick}
                 options={params.options}
                 />)

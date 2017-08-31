@@ -5,7 +5,15 @@ import {
 } from "react-native";
 
 import { IconButton } from "./components"
-import { Home, Details, Episodes, VideoPlayer } from "./screens"
+import {
+  Home,
+  Details,
+  Episodes,
+  VideoPlayer,
+  Settings,
+  Favorites,
+  Watched,
+} from "./screens"
 import uiTheme from "./uiTheme"
 
 const ItemInfo = TabNavigator({
@@ -28,19 +36,35 @@ const ItemInfo = TabNavigator({
   }
 });
 
+const HomeNavigator = TabNavigator({
+  Home: { screen: Home },
+  Favorites: { screen: Favorites },
+  Watched: { screen: Watched },  
+}, {
+  tabBarOptions: {
+    labelStyle: {
+      fontSize: uiTheme.text.fontSize,
+    },
+    tabStyle: {
+         
+    },
+    style: {
+      backgroundColor: uiTheme.palette.primaryDark,
+    },
+    indicatorStyle: {
+      backgroundColor: uiTheme.palette.accentColor
+    }
+  }
+})
+
 // root
 const App = StackNavigator({
-  Home: { screen: Home },
+  Home: { screen: HomeNavigator },
   ItemInfo: { 
     screen: ItemInfo,
     navigationOptions: ({navigation}) => {
       const detailsParams = navigation.state.routes.find(x => x.routeName === "Details").params; // bit of a hack, but it works
       return {
-        headerStyle: {
-          backgroundColor: uiTheme.palette.primaryColor,
-          height: uiTheme.toolbar.container.height
-        },
-        headerTintColor: uiTheme.palette.textColor,
         headerRight: (
           <IconButton
             size={30}
@@ -57,6 +81,19 @@ const App = StackNavigator({
     screen: VideoPlayer,
     navigationOptions: {
       header: null
+    }
+  },
+  Settings: {
+    screen: Settings,
+  }
+}, {
+  navigationOptions: ({navigation}) => { // default style for all the headers
+    return {
+      headerStyle: {
+        backgroundColor: uiTheme.palette.primaryColor,
+        height: uiTheme.toolbar.container.height
+      },
+      headerTintColor: uiTheme.palette.textColor,
     }
   }
 });

@@ -47,8 +47,6 @@ class Details extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
 
-    console.log(this.props.favorites)
-
     if(prevProps.favorites.check != this.props.favorites.check) {
       this.setState({
         star: this.props.favorites.check,
