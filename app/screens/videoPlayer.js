@@ -17,12 +17,14 @@ import Orientation from 'react-native-orientation';
 import { Immersive } from 'react-native-immersive';
 import LinearGradient from "react-native-linear-gradient"
 import KeepAwake from 'react-native-keep-awake';
+import { connect } from "react-redux"
 
 import { IconButton } from "../components"
+import { watched } from "../actions"
 
 import uiTheme from "../uiTheme"
   
-export default class VideoPlayer extends React.Component {
+class VideoPlayer extends React.Component {
     // put the settings in the more-vert icon button thingy
     state = {
       rate: 1,
@@ -43,6 +45,7 @@ export default class VideoPlayer extends React.Component {
         this.setState({
             duration: data.duration,
             paused: !this.state.paused,
+            watched: false,
         });
     };
   
@@ -55,6 +58,12 @@ export default class VideoPlayer extends React.Component {
             currentTime: data.currentTime,
             loading
         });
+        if(data.currentTime/this.state.duration >= 0.8 && !this.state.watched) {
+            this.props.addWatch(this.props.navigation.state.params.data, this.props.navigation.state.params.episode) // auto save the play
+            this.setState({
+                watched: true,
+            })
+        }
     };
   
     onEnd = () => {
@@ -231,6 +240,14 @@ export default class VideoPlayer extends React.Component {
         );
     }
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addWatch: (item, ep) => dispatch(watched.addWatch(item, ep)),
+    }
+}
+  
+export default connect(() => ({}), mapDispatchToProps)(VideoPlayer);
   
   
 const styles = StyleSheet.create({
