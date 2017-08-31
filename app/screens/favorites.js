@@ -12,6 +12,7 @@ import { connect } from "react-redux"
 
 import { favorites } from "../actions"
 import { Item, SearchBar } from "../components"
+import uiTheme from "../uiTheme"
 
 class Home extends React.Component {
 
@@ -144,6 +145,26 @@ class Home extends React.Component {
   }
 
   render() {
+
+    if(this.state.items.length == 0) {
+      return (
+        <FlatList
+        onLayout={this.layoutChange.bind(this)}
+        data={["bla"]}
+        renderItem={({item}) => (
+          <View style={styles.textContainer}>
+            <Text style={styles.headerText}>It's empty in here.</Text>
+            <Text style={styles.text}>Click on the star in the top right corner of an anime to put it here.</Text>
+          </View>)}
+        refreshControl={ (<RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh.bind(this)}/>)}
+        keyExtractor={(x) => x.id}
+        numColumns={3}
+      />
+      )
+    }
+
     return (
       <FlatList
         onLayout={this.layoutChange.bind(this)}
@@ -163,6 +184,24 @@ class Home extends React.Component {
 
 }
 
+const styles = StyleSheet.create({
+  textContainer: {
+    padding: 10,
+    flex: 1,
+  },
+  headerText: {
+    fontWeight: "bold",
+    fontSize: uiTheme.text.fontSize+6,
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: uiTheme.text.fontSize,
+    textAlign: "center",
+  }
+})
+
+
 function mapStateToProps(state) {
   return {
     favorites: state.favorites
@@ -175,9 +214,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
-
-const styles = StyleSheet.create({
-  container: {
-
-  },
-});

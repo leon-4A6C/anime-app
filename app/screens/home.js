@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  ToastAndroid
+  ToastAndroid,
+  RefreshControl,
 } from "react-native";
 import { connect } from "react-redux"
 
@@ -25,6 +26,7 @@ class Home extends React.Component {
       searchText: "",
       isSearch: false,
       show: 0, // same as limit but then for searches
+      refreshing: false,
     }
 
     this.sortingList = [
@@ -151,13 +153,24 @@ class Home extends React.Component {
       this.setState({
         limit: limit + 50
       })
+      if(this.state.refreshing) {
+        this.setState({
+          refreshing: false,
+        })
+      }
     }
     if (!this.props.searchResult.isFetching && this.state.isSearch) {
       this.props.search(searchText, {show})
       this.setState({
         show: show + 50
       })
+      if(this.state.refreshing) {
+        this.setState({
+          refreshing: false,
+        })
+      }
     }
+
   }
 
   _itemPress(props, state) {
@@ -197,6 +210,17 @@ class Home extends React.Component {
     this.forceUpdate() // tmp fix
   }
 
+  onRefresh() {
+    this.setState({
+      items: [],
+      show: 0,
+      limit: 0,
+    })
+    setTimeout(() => {
+      this._load()
+    }, 10)
+  }
+
   render() {
     return (
       <FlatList
@@ -208,6 +232,9 @@ class Home extends React.Component {
                                     onLongPress={this._itemLongPress.bind(this)}/>)}
         onEndReached={this._load.bind(this)}
         onEndReachedThreshold={1 /*adjust as needed*/}
+        refreshControl={ (<RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh.bind(this)}/>)}
         keyExtractor={(x) => x.id}
         numColumns={3}
       />
