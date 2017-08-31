@@ -62,7 +62,7 @@ const HomeNavigator = TabNavigator({
         onSearch={params.onSearched}
         onRemoveSearch={params.onRemoveSearch}
         onLeftElementPress={() => navigation.navigate("Settings")}
-        onOptionsClick={() => console.log(navigation)}
+        onOptionsClick={params.onOptionsClick}
         options={params.options}
       />)
     }

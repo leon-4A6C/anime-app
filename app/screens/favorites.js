@@ -18,13 +18,11 @@ class Home extends React.Component {
   state = {
       items: [],
       numRows: 3,
-      limit: 0,
-      sort: "",
       sorting: {},
       searchText: "",
       isSearch: false,
-      show: 0, // same as limit but then for searches
       refreshing: false,
+      searchResultsReturned: false,
   }
 
   options = [
@@ -38,11 +36,19 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.props.getFavorites();
+    setTimeout(() => {
+      this.props.navigation.setParams({
+        options: this.options.map(x => x.label),
+        onSearched: this.searched.bind(this),
+        onRemoveSearch: this.removeSearch.bind(this),
+        onOptionsClick: this.optionsClick.bind(this),
+      });
+    }, 25);
   }
   
   componentDidUpdate(prevProps, prevState) {
-    if(JSON.stringify(prevProps.favorites.favorites) != JSON.stringify(this.props.favorites.favorites)) {
 
+    const getItems = () => {
       const favs = [];
       for (var fav in this.props.favorites.favorites) {
         if (this.props.favorites.favorites.hasOwnProperty(fav)) {
@@ -50,28 +56,68 @@ class Home extends React.Component {
           favs.push(element);
         }
       }
+      return favs;
+    }
 
+    const resetItems = () => {
       this.setState({
-        items: favs
+        items: getItems()
       })
     }
+
+    if(JSON.stringify(prevProps.favorites.favorites) != JSON.stringify(this.props.favorites.favorites)) {
+      resetItems()
+    }
+
+    if(this.state.isSearch && !this.state.searchResultsReturned) {
+      const items = getItems();
+      const newItems = [];
+      for(let item of items) {
+        console.log(item.title)
+        if(item.title.toLowerCase().indexOf(this.state.searchText.toLowerCase()) != -1) {
+          newItems.push(item);
+        }
+      }
+      console.log(newItems);
+      this.setState({
+        items: newItems,
+        searchResultsReturned: true,
+      })
+    }
+
+    if(prevState.isSearch && !this.state.isSearch) {
+      resetItems()
+    }
+
+    if(prevProps.favorites.isFetching && !this.props.favorites.isFetching) {
+      this.setState({
+        refreshing: false,
+      })
+    }
+
   }
   
 
-  searched() {
-    
+  searched(text) {
+    this.setState({
+      items: [],
+      isSearch: true,
+      searchText: text,
+      searchResultsReturned: false,
+    })
   }
 
   removeSearch() {
-
-  }
-
-  sortingList() {
-
+    this.setState({
+      items: [],
+      isSearch: false,
+      searchText: "",
+      searchResultsReturned: false,
+    })
   }
 
   optionsClick() {
-
+    console.log("clicked on option!")
   }
 
   layoutChange() {
@@ -82,13 +128,10 @@ class Home extends React.Component {
 
     this.setState({
       refreshing: true,
-    });
+    })
 
-    setTimeout(() => {
-      this.setState({
-        refreshing: false,
-      })
-    }, 250);
+    this.props.getFavorites()
+
   }
 
   _itemPress(props, state) {
@@ -127,8 +170,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    getFavorites: () => dispatch(favorites.getFavorites()),
-    removeFavorite: (id) => dispatch(favorites.removeFavorite(id))
+    getFavorites: () => dispatch(favorites.getFavorites())
   }
 }
 
