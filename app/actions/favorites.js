@@ -59,7 +59,8 @@ export function getFavorites() {
                 if(exist) {
                     return fs.readFile(file, "utf8");
                 } else {
-                    dispatch(succes(FAVORITES_GET_SUCCES, {})) // return an empty array
+                    return fs.createFile(file, "{}")
+                        .then(() => fs.readFile(file, "utf8"));
                 }
             }).then(data => dispatch(succes(FAVORITES_GET_SUCCES, JSON.parse(data))))
             .catch(err => {console.log(err); dispatch(failure(FAVORITES_GET_FAILURE, err))})
@@ -93,7 +94,8 @@ export function checkFavorite(id) {
                 if(exist) {
                     return fs.readFile(file, "utf8")
                 } else {
-                    dispatch(succes(FAVORITES_CHECK_SUCCES, false))
+                    return fs.createFile(file, "{}")
+                    .then(() => fs.readFile(file, "utf8"));
                 }
             }).then(data => {
                 data = JSON.parse(data);
