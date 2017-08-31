@@ -146,7 +146,7 @@ class Home extends React.Component {
 
   render() {
 
-    if(this.state.items.length == 0) {
+    if(this.state.items.length == 0 && !this.props.watched.isFetching) {
       return (
         <FlatList
         onLayout={this.layoutChange.bind(this)}

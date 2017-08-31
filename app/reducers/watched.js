@@ -22,7 +22,7 @@ const initialState = {
   set: false,
   add: false,
   remove: false,
-  check: false,
+  check: {},
   error: false,
   errorMessage: null
 }
@@ -83,7 +83,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFetching: true,
-        check: false,
+        check: {},
         error: false,
         errorMessage: null
       }

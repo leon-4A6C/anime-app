@@ -59,7 +59,7 @@ export function getWatched() {
                 if(exist) {
                     return fs.readFile(file, "utf8");
                 } else {
-                    return fs.writeFile(file, "{}")
+                    return fs.createFile(file, "{}")
                         .then(() => fs.readFile(file, "utf8"));
                 }
             }).then(data => dispatch(succes(WATCHED_GET_SUCCES, JSON.parse(data))))
@@ -79,7 +79,7 @@ export function setWatched(data) {
                 } else {
                     return fs.createFile(file, JSON.stringify(data));
                 }
-            }).then(() => {dispatch(succes(WATCHED_SET_SUCCES)); dispatch(getWatched())})
+            }).then(() => {dispatch(succes(WATCHED_SET_SUCCES)); dispatch(getWatched());})
             .catch(err => {console.log(err); dispatch(failure(WATCHED_SET_FAILURE, err))})
     }
 }
@@ -94,22 +94,22 @@ export function checkWatch(id) {
                 if(exist) {
                     return fs.readFile(file, "utf8")
                 } else {
-                    return fs.writeFile(file, "{}")
+                    return fs.createFile(file, "{}")
                         .then(() => fs.readFile(file, "utf8"));
                 }
             }).then(data => {
                 data = JSON.parse(data);
                 if(data[id]) {
-                    dispatch(succes(WATCHED_CHECK_SUCCES, true))
+                    dispatch(succes(WATCHED_CHECK_SUCCES, data[id].watched))
                 } else {
-                    dispatch(succes(WATCHED_CHECK_SUCCES, false))
+                    dispatch(succes(WATCHED_CHECK_SUCCES, {}))
                 }
             })
             .catch(e => {console.log(e); dispatch(failure(WATCHED_CHECK_FAILURE, e))})
     }
 }
 
-export function addWatch(item) {
+export function addWatch(item, ep) {
     return (dispatch) => {
         dispatch(start(WATCHED_ADD))
         checkPermission()
@@ -123,15 +123,26 @@ export function addWatch(item) {
                 }
             }).then(data => {
                 data = JSON.parse(data);
-                data[item.id] = item;
+                if(!data[item.id]) {
+                    data[item.id] = item;
+                }
+                if(!data[item.id].watched) {
+                    data[item.id].watched = {};
+                }
+                data[item.id].watched[ep] = {
+                    time: new Date(),
+                };
+
+                data[item.id].lastWatch = new Date();
+                
                 return fs.writeFile(file, JSON.stringify(data))
             })
-            .then(() => {dispatch(succes(WATCHED_ADD_SUCCES)); dispatch(getWatched())})
+            .then(() => {dispatch(succes(WATCHED_ADD_SUCCES)); dispatch(getWatched()); dispatch(checkWatch(item.id))})
             .catch(e => {console.log(e); dispatch(failure(WATCHED_ADD_FAILURE, e))})
     }
 }
 
-export function removeWatch(id) {
+export function removeWatch(id, ep) {
     return (dispatch) => {
         dispatch(start(WATCHED_REMOVE))
         checkPermission()
@@ -145,10 +156,17 @@ export function removeWatch(id) {
                 }
             }).then(data => {
                 data = JSON.parse(data);
-                delete data[id];
+                if(data[id] && data[id].watched) {
+                    if(data[id].watched[ep]) {
+                        delete data[id].watched[ep];                
+                    }
+                    if(Object.keys(data[id].watched).length === 0) {
+                        delete data[id];
+                    }
+                }
                 return fs.writeFile(file, JSON.stringify(data))
             })
-            .then(() => {dispatch(succes(WATCHED_REMOVE_SUCCES)); dispatch(getWatched())})
+            .then(() => {dispatch(succes(WATCHED_REMOVE_SUCCES)); dispatch(getWatched()); dispatch(checkWatch(id))})
             .catch(e => {console.log(e); dispatch(failure(WATCHED_REMOVE_FAILURE, e))})
     }
 }
