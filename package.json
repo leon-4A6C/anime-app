@@ -1,6 +1,6 @@
 {
   "name": "anime",
-  "version": "v0.1.0rc2",
+  "version": "v0.1.0rc3",
   "checkUpdateUri": "https://api.github.com/repos/leon-4A6C/anime-app/releases",
   "private": true,
   "devDependencies": {
