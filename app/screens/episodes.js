@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  ToastAndroid,
 } from "react-native"
 import { connect } from "react-redux"
 
@@ -56,7 +57,7 @@ class Episodes extends React.Component {
   }
 
   onDownload(props) {
-    console.log(props.episode);
+    ToastAndroid.show("not yet implemented", ToastAndroid.SHORT);
   }
 
   onWatch(props) {
@@ -70,7 +71,7 @@ class Episodes extends React.Component {
   }
 
   onDeleteDownload(props) {
-    console.log(props.episode);
+    ToastAndroid.show("not yet implemented", ToastAndroid.SHORT);
   }
 
   render() {

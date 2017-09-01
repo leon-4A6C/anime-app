@@ -15,8 +15,6 @@ class Settings extends React.Component {
 
     componentDidUpdate(prevProps) {
 
-        console.log(this.props.update)
-
         if(this.props.update.isFetching) {
             ToastAndroid.show('checking for updates...', ToastAndroid.SHORT); 
         }

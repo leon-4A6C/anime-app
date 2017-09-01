@@ -30,7 +30,7 @@ export default class Episode extends React.Component {
 
     _onDownload() {
         if(this.state.downloaded) {
-            this.props.onDelete(this.props, this.state);
+            this.props.onDeleteDownload(this.props, this.state);
         } else {
             this.props.onDownload(this.props, this.state);
         }
@@ -64,7 +64,7 @@ export default class Episode extends React.Component {
                             iconPack="MaterialIcons"
                             name="delete"
                             size={25}
-                            onPress={this._onDelete.bind(this)}
+                            onPress={this._onDownload.bind(this)}
                             style={styles.iconContainer}
                             iconStyle={styles.iconDisabled}
                     /> : null
