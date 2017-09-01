@@ -90,9 +90,14 @@ class Episodes extends React.Component {
         }
       }
 
+      let last = Object.keys(this.props.watched.check);
+      last = parseInt(last[last.length-1]) || 0;
+      console.log(last);
+
       // todo: get saved stuff
       const next = []
-      for(let i = 0; i < Math.min(3, eps.length); i++) {
+      console.log(last, Math.min(3, eps.length-last));
+      for(let i = last; i < Math.min(3+last, eps.length-last); i++) {
         next.push(eps[i]);
       }
 
