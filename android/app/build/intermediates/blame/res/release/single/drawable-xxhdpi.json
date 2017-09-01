@@ -8,12 +8,12 @@
         "source": "/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/drawable-xxhdpi/abc_menu_hardkey_panel_mtrl_mult.9.png"
     },
     {
-        "merged": "/home/leon/github/anime-app/android/app/build/intermediates/res/merged/release/drawable-xxhdpi/abc_list_pressed_holo_light.9.png",
-        "source": "/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/drawable-xxhdpi/abc_list_pressed_holo_light.9.png"
-    },
-    {
         "merged": "/home/leon/github/anime-app/android/app/build/intermediates/res/merged/release/drawable-xxhdpi/abc_btn_radio_to_on_mtrl_015.png",
         "source": "/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/drawable-xxhdpi/abc_btn_radio_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "/home/leon/github/anime-app/android/app/build/intermediates/res/merged/release/drawable-xxhdpi/abc_list_pressed_holo_light.9.png",
+        "source": "/home/leon/github/anime-app/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/res/drawable-xxhdpi/abc_list_pressed_holo_light.9.png"
     },
     {
         "merged": "/home/leon/github/anime-app/android/app/build/intermediates/res/merged/release/drawable-xxhdpi/abc_btn_rating_star_off_mtrl_alpha.png",
