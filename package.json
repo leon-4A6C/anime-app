@@ -1,6 +1,7 @@
 {
   "name": "anime",
-  "version": "0.1.0",
+  "version": "v0.1.0rc1",
+  "checkUpdateUri": "https://api.github.com/repos/leon-4A6C/anime-app/releases",
   "private": true,
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",

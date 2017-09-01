@@ -5,6 +5,7 @@ import * as details from "./details"
 import * as search from "./search"
 import * as favorites from "./favorites"
 import * as watched from "./watched"
+import * as update from "./update"
 
 export {
   top,
@@ -14,4 +15,5 @@ export {
   search,
   favorites,
   watched,
+  update,
 }
